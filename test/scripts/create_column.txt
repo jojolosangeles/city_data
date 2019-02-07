@@ -1,0 +1,4 @@
+load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
+columns sample20
+create sample20 latitude [eval(x)[0] for x in dataFrame['Location']]
+columns sample20

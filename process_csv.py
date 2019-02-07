@@ -43,12 +43,35 @@ class DataFrameTransformer:
     #
     #  Transforms one DataFrame into another
     #
+    #  1/2019 header is:
+    #
+    #  -X- DR Number,
+    #  -X- Date Reported,
+    #      Date Occurred => Date as DateTime
+    #                    => Weekday 0-6
+    #      Time Occurred,
+    #  -X- Area ID,
+    #  -X- Area Name => filter rows by value
+    #  -X- Reporting District,
+    #  -X- Crime Code,
+    #  -X- Crime Code Description,
+    #  -X- MO Codes,
+    #      Victim Age,
+    #      Victim Sex,
+    #      Victim Descent,
+    #  -X- Premise Code,
+    #  -X- Premise Description,
+    #      Address, => normalized so not ALL CAPITALIZED
+    #      Cross Street, => normalized so not ALL CAPITALIZED
+    #      Location === (longitude,latitude) => longitude, latitude
+    #
     def transform(self, df):
         # add/transform columns: latitude, longitude, Date, Weekday, Address, Cross Street
         df['longitude'] = [eval(x)[1] for x in df['Location']]
         df['latitude'] = [eval(x)[0] for x in df['Location']]
         df['Date'] = pd.to_datetime(df['Date Occurred'])
         df['Weekday'] = [x.weekday() for x in df['Date']]
+        df['Year'] = [x.year for x in df['Date']]
 
         # filter rows
         AREA_NAME_FILTER = "Northeast"
@@ -67,7 +90,3 @@ class DataFrameTransformer:
 dataTransformer = DataFrameTransformer()
 csvTransformer = CsvTransformer(inputFilePath, dataTransformer, outputFilePath)
 csvTransformer.execute()
-
-
-
-

@@ -1,0 +1,12 @@
+set -x
+rm actual/*
+python ../pd.py scripts/noinput.txt > actual/noinput.out
+diff expected/noinput.out actual/noinput.out
+python ../pd.py scripts/badsyntax.txt > actual/badsyntax.out
+diff expected/badsyntax.out actual/badsyntax.out
+python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out
+diff expected/load_data_1.out actual/load_data_1.out
+python ../pd.py scripts/drop_columns.txt > actual/drop_columns.out
+diff expected/drop_columns.out actual/drop_columns.out
+python ../pd.py scripts/create_column.txt > actual/create_column.out
+diff expected/create_column.out actual/create_column.out
