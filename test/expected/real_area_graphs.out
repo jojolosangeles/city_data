@@ -1,0 +1,36 @@
+Test: ../pd.py
+> load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+> columns all_areas
+['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
+ 'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
+ 'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
+ 'Premise Description' 'Address' 'Cross Street' 'Location']
+> drop all_areas DR+Number
+Dropping 'DR Number' from 'all_areas'
+> drop all_areas Date+Reported
+Dropping 'Date Reported' from 'all_areas'
+> drop all_areas Area+ID
+Dropping 'Area ID' from 'all_areas'
+> drop all_areas Reporting+District
+Dropping 'Reporting District' from 'all_areas'
+> drop all_areas Crime+Code
+Dropping 'Crime Code' from 'all_areas'
+> drop all_areas Crime+Code+Description
+Dropping 'Crime Code Description' from 'all_areas'
+> drop all_areas MO+Codes
+Dropping 'MO Codes' from 'all_areas'
+> drop all_areas Premise+Code
+Dropping 'Premise Code' from 'all_areas'
+> drop all_areas Premise+Description
+Dropping 'Premise Description' from 'all_areas'
+> drop all_areas Location
+Dropping 'Location' from 'all_areas'
+> create all_areas Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+all_areas.Date=
+> create all_areas Weekday [x.weekday() for x in dataFrame['Date']]
+all_areas.Weekday=
+> create all_areas Year [x.year for x in dataFrame['Date']]
+all_areas.Year=
+> save all_areas
+Saved all_areas.csv
+Test completed: ../pd.py

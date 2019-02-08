@@ -1,20 +1,41 @@
 set -x
-./cleanup
-python ../pd.py scripts/noinput.txt > actual/noinput.out
-diff expected/noinput.out actual/noinput.out
-python ../pd.py scripts/badsyntax.txt > actual/badsyntax.out
-diff expected/badsyntax.out actual/badsyntax.out
-python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out
-diff expected/load_data_1.out actual/load_data_1.out
-python ../pd.py scripts/drop_columns.txt > actual/drop_columns.out
-diff expected/drop_columns.out actual/drop_columns.out
-python ../pd.py scripts/save_data_1.txt > actual/save_data_1.out
-diff expected/save_data_1.out actual/save_data_1.out
-mv sample20.csv actual
-diff expected/sample20.csv actual
-python ../pd.py scripts/bar_1.txt > actual/bar_1.out
-diff expected/bar_1.out actual/bar_1.out
-mv graph1.csv actual
-diff expected/graph1.csv actual
-mv graph1.png actual
-diff -b expected/graph1.png actual
+if [ ! -f "actual/noinput.out" ]; then
+  python ../pd.py scripts/noinput.txt > actual/noinput.out
+  diff expected/noinput.out actual/noinput.out
+fi
+if [ ! -f "actual/badsyntax.out" ]; then
+  python ../pd.py scripts/badsyntax.txt > actual/badsyntax.out
+  diff expected/badsyntax.out actual/badsyntax.out
+fi
+if [ ! -f "actual/load_data_1.out" ]; then
+  python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out
+  diff expected/load_data_1.out actual/load_data_1.out
+fi
+if [ ! -f "actual/drop_columns.out" ]; then
+  python ../pd.py scripts/drop_columns.txt > actual/drop_columns.out
+  diff expected/drop_columns.out actual/drop_columns.out
+fi
+if [ ! -f "actual/save_data_1.out" ]; then
+  python ../pd.py scripts/save_data_1.txt > actual/save_data_1.out
+  diff expected/save_data_1.out actual/save_data_1.out
+  mv sample20.csv actual
+  diff expected/sample20.csv actual
+fi
+if [ ! -f "actual/bar_1.out" ]; then
+  python ../pd.py scripts/bar_1.txt > actual/bar_1.out
+  diff expected/bar_1.out actual/bar_1.out
+  mv graph1.csv actual
+  diff expected/graph1.csv actual
+  mv graph1.png actual
+  diff -b expected/graph1.png actual
+fi
+if [ ! -f "actual/all_areas.csv" ]; then
+  python ../pd.py scripts/real_area_graphs.txt > actual/real_area_graphs.out
+  diff expected/real_area_graphs.out actual/real_area_graphs.out
+  mv all_areas.csv actual
+  diff expected/all_areas.csv actual
+fi
+if [ ! -f "actual/draw_area_graphs.out" ]; then
+  python ../pd.py scripts/draw_area_graphs.txt > actual/draw_area_graphs.out
+  diff expected/draw_area_graphs.out actual/draw_area_graphs.out
+fi

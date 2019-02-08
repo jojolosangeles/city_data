@@ -1,0 +1,16 @@
+load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+columns all_areas
+drop all_areas DR+Number
+drop all_areas Date+Reported
+drop all_areas Area+ID
+drop all_areas Reporting+District
+drop all_areas Crime+Code
+drop all_areas Crime+Code+Description
+drop all_areas MO+Codes
+drop all_areas Premise+Code
+drop all_areas Premise+Description
+drop all_areas Location
+create all_areas Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+create all_areas Weekday [x.weekday() for x in dataFrame['Date']]
+create all_areas Year [x.year for x in dataFrame['Date']]
+save all_areas

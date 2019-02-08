@@ -3,6 +3,9 @@ import sys
 import pandas as pd
 import altair as alt
 
+def name_normalize(s):
+    return s.replace(' ', '_')
+
 class UnknownCommand:
     def execute(*args):
         print("*** Unknown Command ***")
@@ -90,6 +93,45 @@ class BarGraphCommand:
         chart.save(imageFileName, scale_factor=2.0)
         print("Saved {imageFileName}".format(imageFileName=imageFileName))
 
+class ByCommand:
+    def execute(self, context, *args):
+        print("Execute ByCommand")
+        if len(*args) < 2:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 2 parameters: <dataframe name> <codeBlock>, got {numargs} parameters".format(numargs=len(*args)))
+
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        codeBlock = ' '.join(parameters[1:])
+        print("{dataFrameName} => {codeBlock}".format(dataFrameName=dataFrameName, codeBlock=codeBlock))
+        dataFrame = context.get_data_frame(dataFrameName)
+        categories = eval(codeBlock)
+        context.categories = categories
+        context.byDataFrame = dataFrame
+
+
+class DoCommand:
+    def execute(self, context, *args):
+        print("Execute DoCommand")
+        if len(*args) < 3:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 3 parameters: <command for list> <variableName> <codeBlock>, got {numargs} parameters".format(numargs=len(*args)))
+
+        parameters = args[0]
+        command = parameters[0]
+        variableName = parameters[1]
+        codeBlock = ' '.join(parameters[2:])
+        print("{command}({variableName}) => {codeBlock}".format(command=command, variableName=variableName, codeBlock=codeBlock))
+        dataFrame = context.byDataFrame
+        if command == "filter":
+            for category in context.categories:
+                print("filter => {category}".format(category=category))
+                eval("{variableName} = '{category}'".format(variableName=variableName,category=category))
+                new_data_frame = eval(codeBlock)
+                print(new_data_frame)
+
 # BarGraphCommand(sample20) ['X', 'Year:0', 'Year'], ['Y', 'count()', 'Number of Accidents']
 
 # chart = alt.Chart(source).mark_bar().encode(
@@ -104,12 +146,17 @@ class Context:
             "columns": ShowColumnsCommand(),
             "drop": DropColumnCommand(),
             "create": CreateColumnCommand(),
-            "bar": BarGraphCommand()
+            "bar": BarGraphCommand(),
+            "by": ByCommand(),
+            "do": DoCommand()
         }
         self.dataFrames = {}
 
     def get_data_frame(self, dataFrameName):
         return self.dataFrames[dataFrameName]
+
+    def put_data_frame(self, dataFrameName, dataFrame):
+        self.dataFrames[dataFrameName] = dataFrame
 
     def process_line(self, line):
         data = line.split()
