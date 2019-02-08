@@ -1,6 +1,7 @@
 import fileinput
 import sys
 import pandas as pd
+import altair as alt
 
 class UnknownCommand:
     def execute(*args):
@@ -68,6 +69,33 @@ class CreateColumnCommand:
         context.dataFrames[dataFrameName] = dataFrame
         dataFrame = context.dataFrames[dataFrameName]
 
+class BarGraphCommand:
+    def execute(self, context, *args):
+        if len(*args) != 3:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 3 parameters: <dataframe name> <X column configuration> <Y column configuration>, got {numargs} parameters".format(numargs=len(*args)))
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        xConfiguration = parameters[1].replace('+', ' ').split('|')
+        yConfiguration = parameters[2].replace('+', ' ').split('|')
+        print("BarGraphCommand({dataFrameName}) {xConfiguration}, {yConfiguration}"
+            .format(dataFrameName=dataFrameName,xConfiguration=xConfiguration,yConfiguration=yConfiguration))
+        dataFrame = context.get_data_frame(dataFrameName)
+        chart = alt.Chart(dataFrame).mark_bar().encode(
+            alt.X(xConfiguration[1], title=xConfiguration[2]),
+            alt.Y(yConfiguration[1], title=yConfiguration[2])
+        )
+        imageFileName = "{dataFrameName}.png".format(dataFrameName=dataFrameName)
+        chart.save(imageFileName, scale_factor=2.0)
+        print("Saved {imageFileName}".format(imageFileName=imageFileName))
+
+# BarGraphCommand(sample20) ['X', 'Year:0', 'Year'], ['Y', 'count()', 'Number of Accidents']
+
+# chart = alt.Chart(source).mark_bar().encode(
+#     alt.X('Year:O', title='Year'),
+#     alt.Y('count()', title='Number of Accidents')
+# )
 class Context:
     def __init__(self):
         self.commands = {
@@ -75,9 +103,13 @@ class Context:
             "save": SaveCommand(),
             "columns": ShowColumnsCommand(),
             "drop": DropColumnCommand(),
-            "create": CreateColumnCommand()
+            "create": CreateColumnCommand(),
+            "bar": BarGraphCommand()
         }
         self.dataFrames = {}
+
+    def get_data_frame(self, dataFrameName):
+        return self.dataFrames[dataFrameName]
 
     def process_line(self, line):
         data = line.split()
