@@ -18,7 +18,18 @@ class LoadCommand:
         dataFrameName = parameters[2]
         context.dataFrames[dataFrameName] = pd.read_csv(fileName)
 
-class ColumnsCommand:
+class SaveCommand:
+    def execute(self, context, *args):
+        if len(*args) != 1:
+            raise ValueError("Expected 1 parameter: <dataframe name>, got {numargs} parameters".format(numargs=len(*args)))
+
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        fileName = "{dataFrameName}.csv".format(dataFrameName=dataFrameName)
+        context.dataFrames[dataFrameName].to_csv(fileName)
+        print("Saved {fileName}".format(fileName=fileName))
+
+class ShowColumnsCommand:
     def execute(self, context, *args):
         if len(*args) != 1:
             raise ValueError("Expected 1 parameter: <dataframe name>, got {numargs} parameters".format(numargs=len(*args)))
@@ -54,12 +65,15 @@ class CreateColumnCommand:
         print("{dataFrameName}.{columnName}=".format(dataFrameName=dataFrameName,columnName=columnName))
         dataFrame = context.dataFrames[dataFrameName]
         dataFrame[columnName] = eval(rowCode)
+        context.dataFrames[dataFrameName] = dataFrame
+        dataFrame = context.dataFrames[dataFrameName]
 
 class Context:
     def __init__(self):
         self.commands = {
             "load": LoadCommand(),
-            "columns": ColumnsCommand(),
+            "save": SaveCommand(),
+            "columns": ShowColumnsCommand(),
             "drop": DropColumnCommand(),
             "create": CreateColumnCommand()
         }

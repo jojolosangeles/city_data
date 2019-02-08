@@ -1,4 +1,5 @@
 data/real/**
+test/actual/**
 csv/actualOutputData/**
 csv/__pycache__
 .idea/**

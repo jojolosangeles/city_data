@@ -1,0 +1,30 @@
+Test: ../pd.py
+> load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
+> columns sample20
+['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
+ 'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
+ 'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
+ 'Premise Description' 'Address' 'Cross Street' 'Location']
+> drop sample20 DR+Number
+Dropping 'DR Number' from 'sample20'
+> drop sample20 Date+Reported
+Dropping 'Date Reported' from 'sample20'
+> drop sample20 Area+ID
+Dropping 'Area ID' from 'sample20'
+> drop sample20 Reporting+District
+Dropping 'Reporting District' from 'sample20'
+> drop sample20 Crime+Code
+Dropping 'Crime Code' from 'sample20'
+> drop sample20 Crime+Code+Description
+Dropping 'Crime Code Description' from 'sample20'
+> drop sample20 MO+Codes
+Dropping 'MO Codes' from 'sample20'
+> drop sample20 Premise+Code
+Dropping 'Premise Code' from 'sample20'
+> drop sample20 Premise+Description
+Dropping 'Premise Description' from 'sample20'
+> drop sample20 Location
+Dropping 'Location' from 'sample20'
+> save sample20
+Saved sample20.csv
+Test completed: ../pd.py
