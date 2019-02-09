@@ -1,15 +1,22 @@
-Test: ../pd.py
+Test: scripts/drop_columns.txt
 > load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
 > columns sample20
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
-> drop sample20 DR+Number
-Dropping 'DR Number' from 'sample20'
+> drop sample20 DR Number
+Dropping ['DR Number'] from 'sample20'
 > columns sample20
 ['Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID' 'Area Name'
  'Reporting District' 'Crime Code' 'Crime Code Description' 'MO Codes'
  'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
-Test completed: ../pd.py
+> drop sample20 Date Reported, Area ID
+Dropping ['Date Reported', 'Area ID'] from 'sample20'
+> columns sample20
+['Date Occurred' 'Time Occurred' 'Area Name' 'Reporting District'
+ 'Crime Code' 'Crime Code Description' 'MO Codes' 'Victim Age'
+ 'Victim Sex' 'Victim Descent' 'Premise Code' 'Premise Description'
+ 'Address' 'Cross Street' 'Location']
+Test completed: scripts/drop_columns.txt

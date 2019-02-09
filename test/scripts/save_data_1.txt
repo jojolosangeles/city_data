@@ -1,13 +1,6 @@
 load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
 columns sample20
-drop sample20 DR+Number
-drop sample20 Date+Reported
-drop sample20 Area+ID
-drop sample20 Reporting+District
-drop sample20 Crime+Code
-drop sample20 Crime+Code+Description
-drop sample20 MO+Codes
-drop sample20 Premise+Code
-drop sample20 Premise+Description
-drop sample20 Location
+drop sample20 DR Number, Date Reported, Area ID, Reporting District, Crime Code, Crime Code Description
+drop sample20 MO Codes, Premise Code, Premise Description, Location
+columns sample20
 save sample20

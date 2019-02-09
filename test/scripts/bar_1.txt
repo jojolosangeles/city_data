@@ -1,17 +1,11 @@
 load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as graph1
 columns graph1
-drop graph1 DR+Number
-drop graph1 Date+Reported
-drop graph1 Area+ID
-drop graph1 Reporting+District
-drop graph1 Crime+Code
-drop graph1 Crime+Code+Description
-drop graph1 MO+Codes
-drop graph1 Premise+Code
-drop graph1 Premise+Description
-drop graph1 Location
+drop graph1 DR Number, Date Reported, Area ID, Reporting District
+drop graph1 Crime Code, Crime Code Description, MO Codes, Premise Code
+drop graph1 Premise Description, Location
 create graph1 Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 create graph1 Weekday [x.weekday() for x in dataFrame['Date']]
 create graph1 Year [x.year for x in dataFrame['Date']]
+columns graph1
 save graph1
 bar graph1 X|Year:O|Year Y|count()|Number+of+Accidents

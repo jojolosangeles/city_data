@@ -44,17 +44,18 @@ class ShowColumnsCommand:
 
 class DropColumnCommand:
     def execute(self, context, *args):
-        if len(*args) != 2:
+        if len(*args) < 2:
             for arg in args:
                 print(" {arg}".format(arg=arg))
             raise ValueError("Expected 2 parameters: <dataframe name> <column name>, got {numargs} parameters".format(numargs=len(*args)))
-        dataFrameName = args[0][0]
-        columnName = args[0][1]
-        columnName = columnName.replace('+', ' ')
-        print("Dropping '{columnName}' from '{dataFrameName}'".format(
-        dataFrameName=dataFrameName, columnName=columnName))
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        columns = ' '.join(parameters[1:])
+        columnNames =  [col.strip() for col in columns.split(",")]
+        print("Dropping {columnNames} from '{dataFrameName}'".format(
+        dataFrameName=dataFrameName, columnNames=columnNames))
         dataFrame = context.dataFrames[dataFrameName]
-        context.dataFrames[dataFrameName] = dataFrame.drop([columnName], axis=1)
+        context.dataFrames[dataFrameName] = dataFrame.drop(columnNames, axis=1)
 
 class CreateColumnCommand:
     def execute(self, context, *args):
@@ -62,10 +63,11 @@ class CreateColumnCommand:
             for arg in args:
                 print(" {arg}".format(arg=arg))
             raise ValueError("Expected 3 or more parameters: <dataframe name> <column name> <row transformation code>, got {numargs} parameters".format(numargs=len(*args)))
-        dataFrameName = args[0][0]
-        columnName = args[0][1]
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        columnName = parameters[1]
         columnName.replace('+', ' ')
-        rowCode = ' '.join(args[0][2:])
+        rowCode = ' '.join(parameters[2:])
         print("{dataFrameName}.{columnName}=".format(dataFrameName=dataFrameName,columnName=columnName))
         dataFrame = context.dataFrames[dataFrameName]
         dataFrame[columnName] = eval(rowCode)
@@ -169,7 +171,8 @@ class Context:
             print("*** ERROR: {message} ***".format(message=ve))
         #command = commands[data[0].lowercase9)]
 
-print("Test: {script}".format(script=sys.argv[0]))
+script = sys.argv[1]
+print("Test: {script}".format(script=script))
 context = Context()
 
 for line in fileinput.input():
@@ -177,4 +180,4 @@ for line in fileinput.input():
     print("> {}".format(line))
     context.process_line(line)
 
-print("Test completed: {script}".format(script=sys.argv[0]))
+print("Test completed: {script}".format(script=script))

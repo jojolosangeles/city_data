@@ -1,0 +1,11 @@
+set -x
+diff expected/noinput.out actual/noinput.out
+diff expected/badsyntax.out actual/badsyntax.out
+diff expected/load_data_1.out actual/load_data_1.out
+diff expected/drop_columns.out actual/drop_columns.out
+diff expected/save_data_1.out actual/save_data_1.out
+diff expected/sample20.csv actual
+diff expected/bar_1.out actual/bar_1.out
+diff expected/graph1.csv actual
+diff -b expected/graph1.png actual
+diff expected/all_areas.csv actual

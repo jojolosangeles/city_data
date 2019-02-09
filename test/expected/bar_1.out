@@ -1,39 +1,28 @@
-Test: ../pd.py
+Test: scripts/bar_1.txt
 > load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as graph1
 > columns graph1
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
-> drop graph1 DR+Number
-Dropping 'DR Number' from 'graph1'
-> drop graph1 Date+Reported
-Dropping 'Date Reported' from 'graph1'
-> drop graph1 Area+ID
-Dropping 'Area ID' from 'graph1'
-> drop graph1 Reporting+District
-Dropping 'Reporting District' from 'graph1'
-> drop graph1 Crime+Code
-Dropping 'Crime Code' from 'graph1'
-> drop graph1 Crime+Code+Description
-Dropping 'Crime Code Description' from 'graph1'
-> drop graph1 MO+Codes
-Dropping 'MO Codes' from 'graph1'
-> drop graph1 Premise+Code
-Dropping 'Premise Code' from 'graph1'
-> drop graph1 Premise+Description
-Dropping 'Premise Description' from 'graph1'
-> drop graph1 Location
-Dropping 'Location' from 'graph1'
+> drop graph1 DR Number, Date Reported, Area ID, Reporting District
+Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District'] from 'graph1'
+> drop graph1 Crime Code, Crime Code Description, MO Codes, Premise Code
+Dropping ['Crime Code', 'Crime Code Description', 'MO Codes', 'Premise Code'] from 'graph1'
+> drop graph1 Premise Description, Location
+Dropping ['Premise Description', 'Location'] from 'graph1'
 > create graph1 Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 graph1.Date=
 > create graph1 Weekday [x.weekday() for x in dataFrame['Date']]
 graph1.Weekday=
 > create graph1 Year [x.year for x in dataFrame['Date']]
 graph1.Year=
+> columns graph1
+['Date Occurred' 'Time Occurred' 'Area Name' 'Victim Age' 'Victim Sex'
+ 'Victim Descent' 'Address' 'Cross Street' 'Date' 'Weekday' 'Year']
 > save graph1
 Saved graph1.csv
 > bar graph1 X|Year:O|Year Y|count()|Number+of+Accidents
 BarGraphCommand(graph1) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
 Saved graph1.png
-Test completed: ../pd.py
+Test completed: scripts/bar_1.txt
