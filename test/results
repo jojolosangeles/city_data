@@ -9,3 +9,25 @@ diff expected/bar_1.out actual/bar_1.out
 diff expected/graph1.csv actual
 diff -b expected/graph1.png actual
 diff expected/all_areas.csv actual
+diff expected/draw_area_graphs.out actual/draw_area_graphs.out
+diff -b expected/77th_Street.png actual
+diff -b expected/Central.png actual
+diff -b expected/Devonshire.png actual
+diff -b expected/Foothill.png actual
+diff -b expected/Harbor.png actual
+diff -b expected/Hollenbeck.png actual
+diff -b expected/Hollywood.png actual
+diff -b expected/Mission.png actual
+diff -b expected/N_Hollywood.png actual
+diff -b expected/Newton.png actual
+diff -b expected/Northeast.png actual
+diff -b expected/Olympic.png actual
+diff -b expected/Pacific.png actual
+diff -b expected/Rampart.png actual
+diff -b expected/Southeast.png actual
+diff -b expected/Southwest.png actual
+diff -b expected/Topanga.png actual
+diff -b expected/Van_Nuys.png actual
+diff -b expected/West_LA.png actual
+diff -b expected/West_Valley.png actual
+diff -b expected/Wilshire.png actual
