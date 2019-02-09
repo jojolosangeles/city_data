@@ -95,23 +95,28 @@ class BarGraphCommand:
         chart.save(imageFileName, scale_factor=2.0)
         print("Saved {imageFileName}".format(imageFileName=imageFileName))
 
-class ByCommand:
+class FilterByCommand:
     def execute(self, context, *args):
-        print("Execute ByCommand")
-        if len(*args) < 2:
+        print("Execute FilterByCommand")
+        if len(*args) < 3:
             for arg in args:
                 print(" {arg}".format(arg=arg))
-            raise ValueError("Expected 2 parameters: <dataframe name> <codeBlock>, got {numargs} parameters".format(numargs=len(*args)))
+            raise ValueError("Expected 3 parameters: <dataframe name> by <column name>, got {numargs} parameters".format(numargs=len(*args)))
 
         parameters = args[0]
         dataFrameName = parameters[0]
-        codeBlock = ' '.join(parameters[1:])
-        print("{dataFrameName} => {codeBlock}".format(dataFrameName=dataFrameName, codeBlock=codeBlock))
+        columnName = ' '.join(parameters[2:])
+        print("{dataFrameName} => {columnName}".format(dataFrameName=dataFrameName, columnName=columnName))
         dataFrame = context.get_data_frame(dataFrameName)
-        categories = eval(codeBlock)
-        context.categories = categories
-        context.byDataFrame = dataFrame
-
+        uniqueValuesForColumn = dataFrame[columnName].unique()
+        print(uniqueValuesForColumn)
+        for uniqueValue in uniqueValuesForColumn:
+            normalized_value = name_normalize(uniqueValue)
+            keyName = "{dataFrameName}.{normalized_value}".format(dataFrameName=dataFrameName, normalized_value=normalized_value)
+            filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
+            print("FILTERED to {keyName}".format(keyName=keyName))
+            print(filtered_data.head(3))
+            context.put_data_frame(keyName, filtered_data)
 
 class DoCommand:
     def execute(self, context, *args):
@@ -149,7 +154,7 @@ class Context:
             "drop": DropColumnCommand(),
             "create": CreateColumnCommand(),
             "bar": BarGraphCommand(),
-            "by": ByCommand(),
+            "filter": FilterByCommand(),
             "do": DoCommand()
         }
         self.dataFrames = {}
@@ -158,6 +163,7 @@ class Context:
         return self.dataFrames[dataFrameName]
 
     def put_data_frame(self, dataFrameName, dataFrame):
+        print("put_data_frame({dataFrameName})".format(dataFrameName=dataFrameName))
         self.dataFrames[dataFrameName] = dataFrame
 
     def process_line(self, line):

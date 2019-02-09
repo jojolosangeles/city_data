@@ -1,4 +1,3 @@
 load expected/all_areas.csv as all_areas
-by all_areas dataFrame['Area Name'].unique()
-do filter area_name dataFrame['Area Name'] == area_name
-do bar area_name X|Year:O|Year Y|count()|Number+of+Accidents
+filter all_areas by Area Name
+mbar all_areas.Area Name X|Year:O|Year Y|count()|Number+of+Accidents
