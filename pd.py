@@ -1,7 +1,9 @@
 import fileinput
+import math
+import numbers
 import sys
-import pandas as pd
 import altair as alt
+import pandas as pd
 
 def name_normalize(s):
     return s.replace(' ', '_')
@@ -21,6 +23,7 @@ class LoadCommand:
         fileName = parameters[0]
         dataFrameName = parameters[2]
         context.dataFrames[dataFrameName] = pd.read_csv(fileName)
+        print("Loaded {fileName} into DataFrame {dataFrameName}".format(fileName=fileName, dataFrameName=dataFrameName))
 
 class SaveCommand:
     def execute(self, context, *args):
@@ -29,9 +32,25 @@ class SaveCommand:
 
         parameters = args[0]
         dataFrameName = parameters[0]
+        self.saveDataFrame(context, dataFrameName)
+
+    def saveDataFrame(self, context, dataFrameName):
         fileName = "{dataFrameName}.csv".format(dataFrameName=dataFrameName)
         context.dataFrames[dataFrameName].to_csv(fileName)
-        print("Saved {fileName}".format(fileName=fileName))
+        print("Saved CSV File '{fileName}'".format(fileName=fileName))
+
+class ShowCommand:
+    def execute(self, context, *args):
+        if len(*args) != 1:
+            raise ValueError("Expected 1 parameter: <dataframe name>, got {numargs} parameters".format(numargs=len(*args)))
+
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        self.showDataFrame(context, dataFrameName)
+
+    def showDataFrame(self, context, dataFrameName):
+        dataFrame = context.get_data_frame(dataFrameName)
+        print(dataFrame)
 
 class ShowColumnsCommand:
     def execute(self, context, *args):
@@ -41,6 +60,8 @@ class ShowColumnsCommand:
         dataFrame = context.dataFrames[dataFrameName]
         if dataFrame is not None:
             print(dataFrame.columns.values)
+        else:
+            print("DataFrame not found")
 
 class DropColumnCommand:
     def execute(self, context, *args):
@@ -52,10 +73,11 @@ class DropColumnCommand:
         dataFrameName = parameters[0]
         columns = ' '.join(parameters[1:])
         columnNames =  [col.strip() for col in columns.split(",")]
-        print("Dropping {columnNames} from '{dataFrameName}'".format(
+        print("Dropping {columnNames} from DataFrame '{dataFrameName}'".format(
         dataFrameName=dataFrameName, columnNames=columnNames))
         dataFrame = context.dataFrames[dataFrameName]
         context.dataFrames[dataFrameName] = dataFrame.drop(columnNames, axis=1)
+        print("Columns dropped")
 
 class CreateColumnCommand:
     def execute(self, context, *args):
@@ -96,6 +118,7 @@ class BarGraphCommand:
             alt.Y(yConfiguration[1], title=yConfiguration[2])
         )
         imageFileName = "{dataFrameName}.png".format(dataFrameName=dataFrameName)
+        print(imageFileName)
         chart.save(imageFileName, scale_factor=2.0)
         print("Saved {imageFileName}".format(imageFileName=imageFileName))
 
@@ -120,11 +143,12 @@ class MultiBarGraphCommand:
         print("Unique Values For Column = {uniqueValuesForColumn}".format(uniqueValuesForColumn=uniqueValuesForColumn))
         barGraph = BarGraphCommand()
         for value in uniqueValuesForColumn:
-            normalized_value = name_normalize(value)
-            dataFrame = context.get_data_frame("{dataFrameName}.{normalized_value}".format(dataFrameName=dataFrameName,normalized_value=normalized_value))
-            print("VALUE={value}".format(value=value))
-            #print(dataFrame.head(3))
-            barGraph.draw_bar_graph(normalized_value, dataFrame, xConfiguration, yConfiguration)
+            if isinstance(value, str):
+                normalized_value = name_normalize(value)
+                dataFrame = context.get_data_frame("{dataFrameName}.{normalized_value}".format(dataFrameName=dataFrameName,normalized_value=normalized_value))
+                print("VALUE={value}".format(value=value))
+                print(dataFrame.head(3))
+                barGraph.draw_bar_graph(normalized_value, dataFrame, xConfiguration, yConfiguration)
         # dataFrame = context.get_data_frame(dataFrameName)
         # chart = alt.Chart(dataFrame).mark_bar().encode(
         #     alt.X(xConfiguration[1], title=xConfiguration[2]),
@@ -134,9 +158,28 @@ class MultiBarGraphCommand:
         # chart.save(imageFileName, scale_factor=2.0)
         # print("Saved {imageFileName}".format(imageFileName=imageFileName))
 
+class UniqueCommand:
+    def execute(self, context, *args):
+        if len(*args) < 2:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 2 parameters: <dataframe name> <column name>, got {numargs} parameters".format(numargs=len(*args)))
+
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        columnName = ' '.join(parameters[1:])
+        normalized_column_name = name_normalize(columnName)
+        dataFrame = context.get_data_frame(dataFrameName)
+        print("{dataFrameName}.{columnName} unique values".format(dataFrameName=dataFrameName,columnName=columnName))
+        uniqueValuesForColumn = dataFrame[columnName].unique()
+        for uniqueValue in uniqueValuesForColumn:
+            if isinstance(uniqueValue, str) or isinstance(uniqueValue, numbers.Number):
+                print(uniqueValue, end=" ")
+        print("")
+
+
 class FilterByCommand:
     def execute(self, context, *args):
-        print("Execute FilterByCommand")
         if len(*args) < 3:
             for arg in args:
                 print(" {arg}".format(arg=arg))
@@ -145,17 +188,21 @@ class FilterByCommand:
         parameters = args[0]
         dataFrameName = parameters[0]
         columnName = ' '.join(parameters[2:])
-        print("{dataFrameName} => {columnName}".format(dataFrameName=dataFrameName, columnName=columnName))
+        normalized_column_name = name_normalize(columnName)
         dataFrame = context.get_data_frame(dataFrameName)
         uniqueValuesForColumn = dataFrame[columnName].unique()
         context.register_unique_values_for_column(columnName, uniqueValuesForColumn)
-        print(uniqueValuesForColumn)
+        saveDataFrameCommand = SaveCommand()
         for uniqueValue in uniqueValuesForColumn:
-            normalized_value = name_normalize(uniqueValue)
-            keyName = "{dataFrameName}.{normalized_value}".format(dataFrameName=dataFrameName, normalized_value=normalized_value)
-            filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
-            print("FILTERED to {keyName}".format(keyName=keyName))
-            context.put_data_frame(keyName, filtered_data)
+            if isinstance(uniqueValue, str):
+                normalized_value = name_normalize(uniqueValue)
+                keyName = "{dataFrameName}.{normalized_column_name}.{normalized_value}".format(dataFrameName=dataFrameName, normalized_column_name=normalized_column_name,normalized_value=normalized_value)
+                filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
+                print("Created DataFrame {keyName}".format(keyName=keyName))
+                context.put_data_frame(keyName, filtered_data)
+                saveDataFrameCommand.saveDataFrame(context, keyName)
+            else:
+                print("Skipping non-string")
 
 class DoCommand:
     def execute(self, context, *args):
@@ -195,7 +242,9 @@ class Context:
             "bar": BarGraphCommand(),
             "mbar": MultiBarGraphCommand(),
             "filter": FilterByCommand(),
-            "do": DoCommand()
+            "do": DoCommand(),
+            "show": ShowCommand(),
+            "unique": UniqueCommand()
         }
         self.dataFrames = {}
         self.uniqueValuesForColumn = {}
@@ -204,11 +253,9 @@ class Context:
         return self.dataFrames[dataFrameName]
 
     def put_data_frame(self, dataFrameName, dataFrame):
-        print("put_data_frame({dataFrameName})".format(dataFrameName=dataFrameName))
         self.dataFrames[dataFrameName] = dataFrame
 
     def register_unique_values_for_column(self, columnName, uniqueValuesForColumn):
-        print("Register UNIQUE VALUES FOR {columnName}".format(columnName=columnName))
         self.uniqueValuesForColumn[columnName] = uniqueValuesForColumn
 
     def get_unique_values_for_column(self, columnName):
@@ -226,13 +273,33 @@ class Context:
             print("*** ERROR: {message} ***".format(message=ve))
         #command = commands[data[0].lowercase9)]
 
-script = sys.argv[1]
+script="interactive"
+interactive = True
+if len(sys.argv) > 1:
+    script = sys.argv[1]
+    interactive = False
+
 print("Test: {script}".format(script=script))
+
 context = Context()
 
+def prompt_line():
+    if interactive:
+        print(">", end=' ')
+        sys.stdout.flush()
+
+def print_line(line):
+    if not interactive:
+        print("> {}".format(line))
+
+prompt_line()
 for line in fileinput.input():
     line = line.strip()
-    print("> {}".format(line))
-    context.process_line(line)
+    print_line(line)
+    if line == "quit":
+        break
+    elif len(line) > 0:
+        context.process_line(line)
+    prompt_line()
 
 print("Test completed: {script}".format(script=script))

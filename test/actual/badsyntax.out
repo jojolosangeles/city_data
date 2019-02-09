@@ -1,6 +1,0 @@
-Test: scripts/badsyntax.txt
-> load data/x.csv
-*** ERROR: Expected 3 parameters: <file name> as <dataframe name>, got 1 parameters ***
-> load data/x.csv as
-*** ERROR: Expected 3 parameters: <file name> as <dataframe name>, got 2 parameters ***
-Test completed: scripts/badsyntax.txt

@@ -1,8 +1,0 @@
-Test: scripts/load_data_1.txt
-> load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
-> columns sample20
-['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
- 'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
- 'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
- 'Premise Description' 'Address' 'Cross Street' 'Location']
-Test completed: scripts/load_data_1.txt

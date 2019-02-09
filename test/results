@@ -9,7 +9,7 @@ diff expected/bar_1.out actual/bar_1.out
 diff expected/graph1.csv actual
 diff -b expected/graph1.png actual
 diff expected/all_areas.csv actual
-diff expected/draw_area_graphs.out actual/draw_area_graphs.out
+diff expected/draw_graph_1.out actual/draw_graph_1.out
 diff -b expected/77th_Street.png actual
 diff -b expected/Central.png actual
 diff -b expected/Devonshire.png actual
@@ -31,3 +31,4 @@ diff -b expected/Van_Nuys.png actual
 diff -b expected/West_LA.png actual
 diff -b expected/West_Valley.png actual
 diff -b expected/Wilshire.png actual
+diff expected/draw_graph_2.out actual/draw_graph_2.out
