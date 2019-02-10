@@ -1,20 +1,25 @@
 Test: scripts/real_area_graphs.txt
 > load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+Loaded ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame all_areas
 > columns all_areas
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
 > drop all_areas DR Number, Date Reported, Area ID, Reporting District, Crime Code
-Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District', 'Crime Code'] from 'all_areas'
+Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District', 'Crime Code'] from DataFrame 'all_areas'
+Columns dropped
 > drop all_areas Crime Code Description, MO Codes, Premise Code, Premise Description, Location
-Dropping ['Crime Code Description', 'MO Codes', 'Premise Code', 'Premise Description', 'Location'] from 'all_areas'
+Dropping ['Crime Code Description', 'MO Codes', 'Premise Code', 'Premise Description', 'Location'] from DataFrame 'all_areas'
+Columns dropped
 > create all_areas Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 all_areas.Date=
 > create all_areas Weekday [x.weekday() for x in dataFrame['Date']]
 all_areas.Weekday=
 > create all_areas Year [x.year for x in dataFrame['Date']]
 all_areas.Year=
+> create all_areas Hour [math.floor(x/100) for x in dataFrame['Time Occurred']]
+all_areas.Hour=
 > save all_areas
-Saved all_areas.csv
+Saved CSV File 'all_areas.csv'
 Test completed: scripts/real_area_graphs.txt

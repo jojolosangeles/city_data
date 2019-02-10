@@ -96,3 +96,12 @@ if [ ! -f "actual/draw_graph_2.out" ]; then
 fi
 node playground/ll_distance.js > actual/ll_distance.out
 diff expected/ll_distance.out actual
+if [ ! -f "actual/heat.out" ]; then
+  python ../pd.py scripts/heat.txt > actual/heat.out
+  diff expected/heat.out actual/heat.out
+  mv *.png actual
+  diff -b expected/Northeast.Hour.Victim_Sex.heatmap.png actual
+  diff -b expected/Northeast.Hour.Weekday.heatmap.png actual
+  diff -b expected/all_areas.Hour.Victim_Sex.heatmap.png actual
+  diff -b expected/all_areas.Hour.Weekday.heatmap.png actual
+fi

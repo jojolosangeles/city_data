@@ -1,0 +1,6 @@
+load expected/all_areas.csv as all_areas
+heat all_areas Hour Weekday
+heat all_areas Hour Victim+Sex
+load expected/all_areas.Area_Name.Northeast.csv as Northeast
+heat Northeast Hour Weekday
+heat Northeast Hour Victim+Sex

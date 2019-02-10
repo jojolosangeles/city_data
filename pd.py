@@ -149,14 +149,34 @@ class MultiBarGraphCommand:
                 dataFrame = context.get_data_frame(dataFrameKey)
                 print("Bar graph for {dataFrameKey}".format(dataFrameKey=dataFrameKey))
                 barGraph.draw_bar_graph(normalized_value, dataFrame, xConfiguration, yConfiguration)
-        # dataFrame = context.get_data_frame(dataFrameName)
-        # chart = alt.Chart(dataFrame).mark_bar().encode(
-        #     alt.X(xConfiguration[1], title=xConfiguration[2]),
-        #     alt.Y(yConfiguration[1], title=yConfiguration[2])
-        # )
-        # imageFileName = "{dataFrameName}.png".format(dataFrameName=dataFrameName)
-        # chart.save(imageFileName, scale_factor=2.0)
-        # print("Saved {imageFileName}".format(imageFileName=imageFileName))
+
+class HeatMapCommand:
+    def execute(self, context, *args):
+        if len(*args) != 3:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 4 parameters: <dataframe name> <x config> <y config>, got {numargs} parameters".format(numargs=len(*args)))
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        xDimension = parameters[1].replace('+', ' ')
+        yDimension = parameters[2].replace('+', ' ')
+        dataFrame = context.get_data_frame(dataFrameName)
+        # X|Year:O|Year Y|count()|Number+of+Accidents
+        self.draw_heat_map(dataFrameName, dataFrame, xDimension, yDimension)
+
+    def draw_heat_map(self, dataFrameName, dataFrame, xDimension, yDimension):
+        print("HeatMapCommand({dataFrameName}) {xDimension}, {yDimension}"
+            .format(dataFrameName=dataFrameName,xDimension=xDimension,yDimension=yDimension))
+        df = dataFrame.groupby([xDimension,yDimension]).count()
+        dff = df.reset_index(level=[xDimension,yDimension])
+        source = pd.DataFrame({xDimension: dff[xDimension], yDimension: dff[yDimension], 'z': dff[dff.columns[2]]})
+        xFormat = "{xDimension}:O".format(xDimension=xDimension)
+        yFormat = "{yDimension}:O".format(yDimension=yDimension)
+        chart = alt.Chart(source).mark_rect().encode(x=xFormat,y=yFormat,color='z:Q')
+        imageFileName = "{dataFrameName}.{xDimension}.{yDimension}.heatmap.png".format(dataFrameName=dataFrameName,xDimension=name_normalize(xDimension),yDimension=name_normalize(yDimension))
+        chart.save(imageFileName)
+        print("Saved PNG heatmap: {imageFileName}".format(imageFileName=imageFileName))
+
 
 class UniqueCommand:
     def execute(self, context, *args):
@@ -204,33 +224,6 @@ class FilterByCommand:
             else:
                 print("Skipping non-string")
 
-class DoCommand:
-    def execute(self, context, *args):
-        print("Execute DoCommand")
-        if len(*args) < 3:
-            for arg in args:
-                print(" {arg}".format(arg=arg))
-            raise ValueError("Expected 3 parameters: <command for list> <variableName> <codeBlock>, got {numargs} parameters".format(numargs=len(*args)))
-
-        parameters = args[0]
-        command = parameters[0]
-        variableName = parameters[1]
-        codeBlock = ' '.join(parameters[2:])
-        print("{command}({variableName}) => {codeBlock}".format(command=command, variableName=variableName, codeBlock=codeBlock))
-        dataFrame = context.byDataFrame
-        if command == "filter":
-            for category in context.categories:
-                print("filter => {category}".format(category=category))
-                eval("{variableName} = '{category}'".format(variableName=variableName,category=category))
-                new_data_frame = eval(codeBlock)
-                print(new_data_frame)
-
-# BarGraphCommand(sample20) ['X', 'Year:0', 'Year'], ['Y', 'count()', 'Number of Accidents']
-
-# chart = alt.Chart(source).mark_bar().encode(
-#     alt.X('Year:O', title='Year'),
-#     alt.Y('count()', title='Number of Accidents')
-# )
 class Context:
     def __init__(self):
         self.commands = {
@@ -242,9 +235,9 @@ class Context:
             "bar": BarGraphCommand(),
             "mbar": MultiBarGraphCommand(),
             "filter": FilterByCommand(),
-            "do": DoCommand(),
             "show": ShowCommand(),
-            "unique": UniqueCommand()
+            "unique": UniqueCommand(),
+            "heat": HeatMapCommand()
         }
         self.dataFrames = {}
         self.uniqueValuesForColumn = {}

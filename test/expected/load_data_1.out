@@ -1,5 +1,6 @@
 Test: scripts/load_data_1.txt
 > load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
+Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame sample20
 > columns sample20
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
