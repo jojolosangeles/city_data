@@ -1,55 +1,49 @@
 Test: scripts/draw_graph_1.txt
 > load expected/all_areas.csv as all_areas
+Loaded expected/all_areas.csv into DataFrame all_areas
 > filter all_areas by Area Name
-Execute FilterByCommand
-all_areas => Area Name
-Register UNIQUE VALUES FOR Area Name
-['Central' '77th Street' 'Pacific' 'Topanga' 'Southwest' 'Foothill'
- 'Newton' 'Hollywood' 'N Hollywood' 'Northeast' 'Hollenbeck' 'West LA'
- 'Southeast' 'Devonshire' 'Mission' 'Harbor' 'Wilshire' 'Rampart'
- 'Olympic' 'West Valley' 'Van Nuys']
-FILTERED to all_areas.Central
-put_data_frame(all_areas.Central)
-FILTERED to all_areas.77th_Street
-put_data_frame(all_areas.77th_Street)
-FILTERED to all_areas.Pacific
-put_data_frame(all_areas.Pacific)
-FILTERED to all_areas.Topanga
-put_data_frame(all_areas.Topanga)
-FILTERED to all_areas.Southwest
-put_data_frame(all_areas.Southwest)
-FILTERED to all_areas.Foothill
-put_data_frame(all_areas.Foothill)
-FILTERED to all_areas.Newton
-put_data_frame(all_areas.Newton)
-FILTERED to all_areas.Hollywood
-put_data_frame(all_areas.Hollywood)
-FILTERED to all_areas.N_Hollywood
-put_data_frame(all_areas.N_Hollywood)
-FILTERED to all_areas.Northeast
-put_data_frame(all_areas.Northeast)
-FILTERED to all_areas.Hollenbeck
-put_data_frame(all_areas.Hollenbeck)
-FILTERED to all_areas.West_LA
-put_data_frame(all_areas.West_LA)
-FILTERED to all_areas.Southeast
-put_data_frame(all_areas.Southeast)
-FILTERED to all_areas.Devonshire
-put_data_frame(all_areas.Devonshire)
-FILTERED to all_areas.Mission
-put_data_frame(all_areas.Mission)
-FILTERED to all_areas.Harbor
-put_data_frame(all_areas.Harbor)
-FILTERED to all_areas.Wilshire
-put_data_frame(all_areas.Wilshire)
-FILTERED to all_areas.Rampart
-put_data_frame(all_areas.Rampart)
-FILTERED to all_areas.Olympic
-put_data_frame(all_areas.Olympic)
-FILTERED to all_areas.West_Valley
-put_data_frame(all_areas.West_Valley)
-FILTERED to all_areas.Van_Nuys
-put_data_frame(all_areas.Van_Nuys)
+Created DataFrame all_areas.Area_Name.Central
+Saved CSV File 'all_areas.Area_Name.Central.csv'
+Created DataFrame all_areas.Area_Name.77th_Street
+Saved CSV File 'all_areas.Area_Name.77th_Street.csv'
+Created DataFrame all_areas.Area_Name.Pacific
+Saved CSV File 'all_areas.Area_Name.Pacific.csv'
+Created DataFrame all_areas.Area_Name.Topanga
+Saved CSV File 'all_areas.Area_Name.Topanga.csv'
+Created DataFrame all_areas.Area_Name.Southwest
+Saved CSV File 'all_areas.Area_Name.Southwest.csv'
+Created DataFrame all_areas.Area_Name.Foothill
+Saved CSV File 'all_areas.Area_Name.Foothill.csv'
+Created DataFrame all_areas.Area_Name.Newton
+Saved CSV File 'all_areas.Area_Name.Newton.csv'
+Created DataFrame all_areas.Area_Name.Hollywood
+Saved CSV File 'all_areas.Area_Name.Hollywood.csv'
+Created DataFrame all_areas.Area_Name.N_Hollywood
+Saved CSV File 'all_areas.Area_Name.N_Hollywood.csv'
+Created DataFrame all_areas.Area_Name.Northeast
+Saved CSV File 'all_areas.Area_Name.Northeast.csv'
+Created DataFrame all_areas.Area_Name.Hollenbeck
+Saved CSV File 'all_areas.Area_Name.Hollenbeck.csv'
+Created DataFrame all_areas.Area_Name.West_LA
+Saved CSV File 'all_areas.Area_Name.West_LA.csv'
+Created DataFrame all_areas.Area_Name.Southeast
+Saved CSV File 'all_areas.Area_Name.Southeast.csv'
+Created DataFrame all_areas.Area_Name.Devonshire
+Saved CSV File 'all_areas.Area_Name.Devonshire.csv'
+Created DataFrame all_areas.Area_Name.Mission
+Saved CSV File 'all_areas.Area_Name.Mission.csv'
+Created DataFrame all_areas.Area_Name.Harbor
+Saved CSV File 'all_areas.Area_Name.Harbor.csv'
+Created DataFrame all_areas.Area_Name.Wilshire
+Saved CSV File 'all_areas.Area_Name.Wilshire.csv'
+Created DataFrame all_areas.Area_Name.Rampart
+Saved CSV File 'all_areas.Area_Name.Rampart.csv'
+Created DataFrame all_areas.Area_Name.Olympic
+Saved CSV File 'all_areas.Area_Name.Olympic.csv'
+Created DataFrame all_areas.Area_Name.West_Valley
+Saved CSV File 'all_areas.Area_Name.West_Valley.csv'
+Created DataFrame all_areas.Area_Name.Van_Nuys
+Saved CSV File 'all_areas.Area_Name.Van_Nuys.csv'
 > mbar all_areas Area Name X|Year:O|Year Y|count()|Number+of+Accidents
 Column Descriminator = 'Area Name'
 BarGraphCommand(all_areas) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
@@ -58,67 +52,67 @@ Unique Values For Column = ['Central' '77th Street' 'Pacific' 'Topanga' 'Southwe
  'Newton' 'Hollywood' 'N Hollywood' 'Northeast' 'Hollenbeck' 'West LA'
  'Southeast' 'Devonshire' 'Mission' 'Harbor' 'Wilshire' 'Rampart'
  'Olympic' 'West Valley' 'Van Nuys']
-VALUE=Central
+Bar graph for all_areas.Area_Name.Central
 BarGraphCommand(Central) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Central.png
-VALUE=77th Street
+Saved Bar Graph PNG 'Central.png'
+Bar graph for all_areas.Area_Name.77th_Street
 BarGraphCommand(77th_Street) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved 77th_Street.png
-VALUE=Pacific
+Saved Bar Graph PNG '77th_Street.png'
+Bar graph for all_areas.Area_Name.Pacific
 BarGraphCommand(Pacific) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Pacific.png
-VALUE=Topanga
+Saved Bar Graph PNG 'Pacific.png'
+Bar graph for all_areas.Area_Name.Topanga
 BarGraphCommand(Topanga) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Topanga.png
-VALUE=Southwest
+Saved Bar Graph PNG 'Topanga.png'
+Bar graph for all_areas.Area_Name.Southwest
 BarGraphCommand(Southwest) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Southwest.png
-VALUE=Foothill
+Saved Bar Graph PNG 'Southwest.png'
+Bar graph for all_areas.Area_Name.Foothill
 BarGraphCommand(Foothill) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Foothill.png
-VALUE=Newton
+Saved Bar Graph PNG 'Foothill.png'
+Bar graph for all_areas.Area_Name.Newton
 BarGraphCommand(Newton) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Newton.png
-VALUE=Hollywood
+Saved Bar Graph PNG 'Newton.png'
+Bar graph for all_areas.Area_Name.Hollywood
 BarGraphCommand(Hollywood) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Hollywood.png
-VALUE=N Hollywood
+Saved Bar Graph PNG 'Hollywood.png'
+Bar graph for all_areas.Area_Name.N_Hollywood
 BarGraphCommand(N_Hollywood) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved N_Hollywood.png
-VALUE=Northeast
+Saved Bar Graph PNG 'N_Hollywood.png'
+Bar graph for all_areas.Area_Name.Northeast
 BarGraphCommand(Northeast) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Northeast.png
-VALUE=Hollenbeck
+Saved Bar Graph PNG 'Northeast.png'
+Bar graph for all_areas.Area_Name.Hollenbeck
 BarGraphCommand(Hollenbeck) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Hollenbeck.png
-VALUE=West LA
+Saved Bar Graph PNG 'Hollenbeck.png'
+Bar graph for all_areas.Area_Name.West_LA
 BarGraphCommand(West_LA) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved West_LA.png
-VALUE=Southeast
+Saved Bar Graph PNG 'West_LA.png'
+Bar graph for all_areas.Area_Name.Southeast
 BarGraphCommand(Southeast) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Southeast.png
-VALUE=Devonshire
+Saved Bar Graph PNG 'Southeast.png'
+Bar graph for all_areas.Area_Name.Devonshire
 BarGraphCommand(Devonshire) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Devonshire.png
-VALUE=Mission
+Saved Bar Graph PNG 'Devonshire.png'
+Bar graph for all_areas.Area_Name.Mission
 BarGraphCommand(Mission) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Mission.png
-VALUE=Harbor
+Saved Bar Graph PNG 'Mission.png'
+Bar graph for all_areas.Area_Name.Harbor
 BarGraphCommand(Harbor) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Harbor.png
-VALUE=Wilshire
+Saved Bar Graph PNG 'Harbor.png'
+Bar graph for all_areas.Area_Name.Wilshire
 BarGraphCommand(Wilshire) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Wilshire.png
-VALUE=Rampart
+Saved Bar Graph PNG 'Wilshire.png'
+Bar graph for all_areas.Area_Name.Rampart
 BarGraphCommand(Rampart) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Rampart.png
-VALUE=Olympic
+Saved Bar Graph PNG 'Rampart.png'
+Bar graph for all_areas.Area_Name.Olympic
 BarGraphCommand(Olympic) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Olympic.png
-VALUE=West Valley
+Saved Bar Graph PNG 'Olympic.png'
+Bar graph for all_areas.Area_Name.West_Valley
 BarGraphCommand(West_Valley) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved West_Valley.png
-VALUE=Van Nuys
+Saved Bar Graph PNG 'West_Valley.png'
+Bar graph for all_areas.Area_Name.Van_Nuys
 BarGraphCommand(Van_Nuys) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-Saved Van_Nuys.png
+Saved Bar Graph PNG 'Van_Nuys.png'
 Test completed: scripts/draw_graph_1.txt

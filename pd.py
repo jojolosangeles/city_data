@@ -118,9 +118,8 @@ class BarGraphCommand:
             alt.Y(yConfiguration[1], title=yConfiguration[2])
         )
         imageFileName = "{dataFrameName}.png".format(dataFrameName=dataFrameName)
-        print(imageFileName)
         chart.save(imageFileName, scale_factor=2.0)
-        print("Saved {imageFileName}".format(imageFileName=imageFileName))
+        print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
 
 class MultiBarGraphCommand:
     def execute(self, context, *args):
@@ -132,22 +131,23 @@ class MultiBarGraphCommand:
         dataFrameName = parameters[0]
         lastParameterOffset = len(parameters) - 1
         columnDescriminator = parameters[1:(lastParameterOffset-1)]
-        columnDescriminatorString = " ".join(columnDescriminator)
-        print("Column Descriminator = '{columnDescriminatorString}'".format(columnDescriminatorString=columnDescriminatorString))
+        columnName = " ".join(columnDescriminator)
+        print("Column Descriminator = '{columnName}'".format(columnName=columnName))
         xConfiguration = parameters[lastParameterOffset-1].replace('+', ' ').split('|')
         yConfiguration = parameters[lastParameterOffset].replace('+', ' ').split('|')
         print("BarGraphCommand({dataFrameName}) {xConfiguration}, {yConfiguration}"
             .format(dataFrameName=dataFrameName,xConfiguration=xConfiguration,yConfiguration=yConfiguration))
 
-        uniqueValuesForColumn = context.get_unique_values_for_column(columnDescriminatorString)
+        uniqueValuesForColumn = context.get_unique_values_for_column(columnName)
+        normalized_column_name = name_normalize(columnName)
         print("Unique Values For Column = {uniqueValuesForColumn}".format(uniqueValuesForColumn=uniqueValuesForColumn))
         barGraph = BarGraphCommand()
         for value in uniqueValuesForColumn:
             if isinstance(value, str):
                 normalized_value = name_normalize(value)
-                dataFrame = context.get_data_frame("{dataFrameName}.{normalized_value}".format(dataFrameName=dataFrameName,normalized_value=normalized_value))
-                print("VALUE={value}".format(value=value))
-                print(dataFrame.head(3))
+                dataFrameKey = "{dataFrameName}.{normalized_column_name}.{normalized_value}".format(dataFrameName=dataFrameName,normalized_column_name=normalized_column_name,normalized_value=normalized_value)
+                dataFrame = context.get_data_frame(dataFrameKey)
+                print("Bar graph for {dataFrameKey}".format(dataFrameKey=dataFrameKey))
                 barGraph.draw_bar_graph(normalized_value, dataFrame, xConfiguration, yConfiguration)
         # dataFrame = context.get_data_frame(dataFrameName)
         # chart = alt.Chart(dataFrame).mark_bar().encode(

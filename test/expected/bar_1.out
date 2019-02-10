@@ -1,16 +1,20 @@
 Test: scripts/bar_1.txt
 > load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as graph1
+Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame graph1
 > columns graph1
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
 > drop graph1 DR Number, Date Reported, Area ID, Reporting District
-Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District'] from 'graph1'
+Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District'] from DataFrame 'graph1'
+Columns dropped
 > drop graph1 Crime Code, Crime Code Description, MO Codes, Premise Code
-Dropping ['Crime Code', 'Crime Code Description', 'MO Codes', 'Premise Code'] from 'graph1'
+Dropping ['Crime Code', 'Crime Code Description', 'MO Codes', 'Premise Code'] from DataFrame 'graph1'
+Columns dropped
 > drop graph1 Premise Description, Location
-Dropping ['Premise Description', 'Location'] from 'graph1'
+Dropping ['Premise Description', 'Location'] from DataFrame 'graph1'
+Columns dropped
 > create graph1 Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 graph1.Date=
 > create graph1 Weekday [x.weekday() for x in dataFrame['Date']]
@@ -21,8 +25,9 @@ graph1.Year=
 ['Date Occurred' 'Time Occurred' 'Area Name' 'Victim Age' 'Victim Sex'
  'Victim Descent' 'Address' 'Cross Street' 'Date' 'Weekday' 'Year']
 > save graph1
-Saved graph1.csv
+Saved CSV File 'graph1.csv'
 > bar graph1 X|Year:O|Year Y|count()|Number+of+Accidents
 BarGraphCommand(graph1) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
+graph1.png
 Saved graph1.png
 Test completed: scripts/bar_1.txt
