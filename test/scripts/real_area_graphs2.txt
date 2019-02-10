@@ -1,4 +1,4 @@
-load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+load data/sample_100_Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
 columns all_areas
 drop all_areas DR Number, Date Reported, Area ID, Reporting District, Crime Code
 drop all_areas Crime Code Description, MO Codes, Premise Code, Premise Description, Location

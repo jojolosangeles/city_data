@@ -28,6 +28,5 @@ graph1.Year=
 Saved CSV File 'graph1.csv'
 > bar graph1 X|Year:O|Year Y|count()|Number+of+Accidents
 BarGraphCommand(graph1) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
-graph1.png
-Saved graph1.png
+Saved Bar Graph PNG 'graph1.png'
 Test completed: scripts/bar_1.txt
