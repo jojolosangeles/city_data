@@ -1,6 +1,8 @@
 load expected/all_areas.csv as all_areas
 heat all_areas Hour Weekday
 heat all_areas Hour Victim+Sex
+create all_areas Age [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in dataFrame['Victim Age']]
+heat all_areas Age Weekday
 load expected/all_areas.Area_Name.Northeast.csv as Northeast
 heat Northeast Hour Weekday
 heat Northeast Hour Victim+Sex

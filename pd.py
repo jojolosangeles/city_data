@@ -10,9 +10,7 @@ def name_normalize(s):
 
 class UnknownCommand:
     def execute(*args):
-        print("*** Unknown Command ***")
-        for arg in args:
-            print(" {arg}".format(arg=arg))
+        pass
 
 class LoadCommand:
     def execute(self, context, *args):

@@ -30,8 +30,8 @@ if [ ! -f "actual/bar_1.out" ]; then
   diff -b expected/graph1.png actual
 fi
 if [ ! -f "actual/all_areas.csv" ]; then
-  python ../pd.py scripts/real_area_graphs.txt > actual/real_area_graphs.out
-  diff expected/real_area_graphs.out actual/real_area_graphs.out
+  python ../pd.py scripts/create_csv_file.txt > actual/create_csv_file.out
+  diff expected/create_csv_file.out actual/create_csv_file.out
   mv all_areas.csv actual
   diff expected/all_areas.csv actual
 fi
