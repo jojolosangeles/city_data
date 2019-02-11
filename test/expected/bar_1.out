@@ -1,11 +1,16 @@
 Test: scripts/bar_1.txt
+> # Load collision data into "graph1" DataFrame
 > load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as graph1
 Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame graph1
+> 
+> # Display the columns loaded (to verify the load was successful)
 > columns graph1
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
+> 
+> # Get rid of the columns we aren't using
 > drop graph1 DR Number, Date Reported, Area ID, Reporting District
 Dropping ['DR Number', 'Date Reported', 'Area ID', 'Reporting District'] from DataFrame 'graph1'
 Columns dropped
@@ -15,17 +20,26 @@ Columns dropped
 > drop graph1 Premise Description, Location
 Dropping ['Premise Description', 'Location'] from DataFrame 'graph1'
 Columns dropped
+> 
+> # Create some new columns
 > create graph1 Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 graph1.Date=
 > create graph1 Weekday [x.weekday() for x in dataFrame['Date']]
 graph1.Weekday=
 > create graph1 Year [x.year for x in dataFrame['Date']]
 graph1.Year=
+> 
+> # Show the current state of the columns (to verify changes)
 > columns graph1
 ['Date Occurred' 'Time Occurred' 'Area Name' 'Victim Age' 'Victim Sex'
  'Victim Descent' 'Address' 'Cross Street' 'Date' 'Weekday' 'Year']
+> 
+> # Save the DataFrame "graph1" into a CSV file "graph1.csv"
 > save graph1
 Saved CSV File 'graph1.csv'
+> 
+> # Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
+> # Notation for axes is passed to
 > bar graph1 X|Year:O|Year Y|count()|Number+of+Accidents
 BarGraphCommand(graph1) ['X', 'Year:O', 'Year'], ['Y', 'count()', 'Number of Accidents']
 Saved Bar Graph PNG 'graph1.png'
