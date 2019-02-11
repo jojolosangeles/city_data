@@ -9,8 +9,27 @@ This is a thin layer above pandas and altair.
 There is lots of great data, like Los Angeles city data at https://data.lacity.org/
 and some amazing tools for processing and visualizing the data.
 
-However, I only want to do some really simple things, like put points on a map,
-draw a bar graph or a heat map.
+Here we have a single interface with minimal commands
+for processing and visualizing data.
+
+### Command summary:
+These load, process, and visualize data.
+```
+# load, save CSV data
+load <csv file> as <data frame name>
+save <data frame name>
+
+# create, drop columns in data
+create <data frame name> <column name> <python code>
+drop <data frame name> <column name>[,<another>,...]
+
+# draw bar graph (or multiple bar graphs), save PNG file
+bar <data frame name> <x config> <y config>
+mbar <data frame name> <column name> <x config> <y config>
+
+# draw heat map, save PNG file
+heat <data frame name> <x dimension> <y dimension>
+```
 
 ### Example:  Heat Map for Northeast LA Collision Data
 
@@ -22,23 +41,22 @@ distributed by Day of the Week and Hour of the Day?   Here's what it looks like:
 
 ![alt text](./test/expected/Northeast.Hour.Weekday.heatmap.png "Northeast LA Accidents-by-Weekday-and-Hour")
 
-This code was used to create that graph:
 ```
-load expected/all_areas.csv as all_areas
-heat all_areas Hour Weekday
+load expected/all_areas.Area_Name.Northeast.csv as Northeast
+heat Northeast Hour Weekday
 ```
+
 
 It looks like Northeast LA gets quite a few more accidents at 5 PM on Fridays.  How does that look for
 all of Los Angeles?
 
 ![alt text](./test/expected/all_areas.Hour.Weekday.heatmap.png "Los Angeles Accidents-by-Weekday-and-Hour")
 
-The code used to create that graph:
-This code was used to create that graph:
 ```
-load expected/all_areas.Area_Name.Northeast.csv as Northeast
-heat Northeast Hour Weekday
+load expected/all_areas.csv as all_areas
+heat all_areas Hour Weekday
 ```
+
 
 Both those depend on CSV files generated from the Los Angeles city
 data file.  Those files were generated with this code:
