@@ -119,6 +119,32 @@ class BarGraphCommand:
         chart.save(imageFileName, scale_factor=2.0)
         print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
 
+class LineCommand:
+    def execute(self, context, *args):
+        if len(*args) != 4:
+            for arg in args:
+                print(" {arg}".format(arg=arg))
+            raise ValueError("Expected 3 parameters: <dataframe name> <X dimension> <Y dimension> <Color dimension>, got {numargs} parameters".format(numargs=len(*args)))
+        parameters = args[0]
+        dataFrameName = parameters[0]
+        xDimension = parameters[1].replace('+', ' ')
+        yDimension = parameters[2].replace('+', ' ')
+        colorDimension = parameters[3].replace('+', ' ')
+        self.draw_line(dataFrameName, xDimension, yDimension, colorDimension)
+
+    def draw_line(self, dataFrameName, xDimension, yDimension, colorDimension):
+        print("LineCommand({dataFrameName}) {xDimension}, {yDimension} {colorDimension}"
+            .format(dataFrameName=dataFrameName,xDimension=xDimension,yDimension=yDimension,colorDimension=colorDimension))
+        dataFrame = context.get_data_frame(dataFrameName)
+        chart = alt.Chart(dataFrame).mark_line().encode(
+            alt.X('count()', title=xDimension),
+            alt.Y(yDimension, title=yDimension),
+            color=colorDimension
+        )
+        imageFileName = "{dataFrameName}_line.png".format(dataFrameName=dataFrameName)
+        chart.save(imageFileName, scale_factor=2.0)
+        print("Saved ll_distance PNG '{imageFileName}'".format(imageFileName=imageFileName))
+
 class MultiBarGraphCommand:
     def execute(self, context, *args):
         if len(*args) < 4:
@@ -222,7 +248,7 @@ class FilterByCommand:
             else:
                 print("Skipping non-string")
 
-class Context:
+class CommandParser:
     def __init__(self):
         self.commands = {
             "load": LoadCommand(),
@@ -235,10 +261,22 @@ class Context:
             "filter": FilterByCommand(),
             "show": ShowCommand(),
             "unique": UniqueCommand(),
-            "heat": HeatMapCommand()
+            "heat": HeatMapCommand(),
+            "line": LineCommand()
         }
+
+    def parse(self, line):
+        data = line.split()
+        cmd = data[0].lower()
+        parameters = data[1:]
+        command = self.commands.get(cmd, UnknownCommand())
+        return command, parameters
+
+class Context:
+    def __init__(self):
         self.dataFrames = {}
         self.uniqueValuesForColumn = {}
+        self.commandParser = CommandParser()
 
     def get_data_frame(self, dataFrameName):
         return self.dataFrames[dataFrameName]
@@ -250,16 +288,12 @@ class Context:
         self.uniqueValuesForColumn[columnName] = uniqueValuesForColumn
 
     def get_unique_values_for_column(self, columnName):
-        print("REMEMBER UNIQUE VALUES FOR {columnName}".format(columnName=columnName))
         return self.uniqueValuesForColumn[columnName]
 
     def process_line(self, line):
-        data = line.split()
-        cmd = data[0].lower()
-        args = data[1:]
-        command = self.commands.get(cmd, UnknownCommand())
+        command, parameters = self.commandParser.parse(line)
         try:
-            command.execute(self, args)
+            command.execute(self, parameters)
         except ValueError as ve:
             print("*** ERROR: {message} ***".format(message=ve))
         #command = commands[data[0].lowercase9)]
