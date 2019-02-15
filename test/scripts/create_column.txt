@@ -1,5 +1,5 @@
 sample20 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
 sample20.columns
-sample20.latitude = [eval(x)[0] for x in dataFrame['Location']]
-sample20.longitude = [eval(x)[1] for x in dataFrame['Location']]
+sample20.latitude <= [eval(x)[0] for x in dataFrame['Location']]
+sample20.longitude <= [eval(x)[1] for x in dataFrame['Location']]
 sample20.columns

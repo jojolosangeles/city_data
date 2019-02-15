@@ -10,6 +10,7 @@ class Key:
     COMMAND="command"
     CODE="code"
     PARAMETERS="params"
+    GRAPH_TYPE: "bar"
 
 class Command:
     # command keys that map to a specific implementation
@@ -23,8 +24,8 @@ class Command:
     # DropColumnsCommand
     DROP_COLUMNS = "drop"
 
-    # Chart Commands
-    CHART_BAR = "bar"
+    # Graph Commands
+    BAR_GRAPH = "bar"
 
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"

@@ -21,6 +21,9 @@ Command formats:
 - Remove columns: data_frame_name.drop comma_delimited_list_of_column_names
 - Create column: data_frame_name.new_column_name <= python_code_returning_ALL_column_values
 
+Note: the python code is executed with "eval", so if it requires any imports
+those have to already be present in commands/data_frame.py (e.g. this imports "math"
+due to a script reference)
 Here is a test script that shows how these look:
 ```
 # Load collision data into "bar_graph_1" DataFrame

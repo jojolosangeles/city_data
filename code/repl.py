@@ -28,8 +28,8 @@ class CommandLineParser:
         line = line.strip()
         for command in self.param_regex_most_to_least_specific:
             if command.matches(line):
-                return(command.asData())
-        return { "command": Command.UNKNOWN }
+                return(command.asData(), True)
+        return { "command": Command.UNKNOWN }, True
 
 
 class Context:
@@ -51,8 +51,8 @@ class CommandExecutor:
             Command.DROP_COLUMNS: DropColumnsCommand(),
             Command.SHOW_COLUMNS: ShowColumnsCommand(),
 
-            # Chart commands
-            Command.CHART_BAR: BarGraphCommand(),
+            # Graph commands
+            Command.BAR_GRAPH: BarGraphCommand(),
 
             # none of the above
             Command.UNKNOWN: UnknownCommand()
@@ -74,8 +74,9 @@ class Repl:
             sys.stdout.flush()
 
     def process_line(self, line):
-        commandData = self.commandLineParser.identify_command(line)
-        self.commandExecutor.execute(commandData, self.context)
+        commandData,isComplete = self.commandLineParser.identify_command(line)
+        if isComplete:
+            self.commandExecutor.execute(commandData, self.context)
 
     def print_line(self, line):
         if not self.interactive:

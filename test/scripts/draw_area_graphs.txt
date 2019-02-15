@@ -1,7 +1,5 @@
 all_areas = expected/all_areas.csv
-bar all_areas.Area Name
- X|Year:O|Year
- Y|count()|Number of Accidents
-bar all_areas.Victim Sex
- X|Year:O|Year
- Y|count()|Number of Accidents
+all_areas.filter Area Name
+bar X|Year:O|Year, Y|count()|Number of Accidents
+all_areas.filter Victim Sex
+bar X|Year:O|Year, Y|count()|Number of Accidents
