@@ -15,20 +15,17 @@ class CommandLineParser:
             # CODE free form python code that generates all values for a new DataFrame column
             # PARAMS list of free form text names (with spaces allowed), separated by commas
             #
-            Command("DF=FILE", "\s*(\w+)\s*=\s*([\w\.\\\/]+)\s*", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
-            Command("DF.COL<=CODE", "\s*(\w+\.\w+)\s*<=\s*([ -~]+)+\s*", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
-            Command("DF.COMMAND PARAMS", "\s*(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
-            Command("DF.COMMAND", "\s*(\w+).(\w+)\s*", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND)
+            Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
+            Command("DF.COL<=CODE", "(\w+)\.(\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
+            Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
+            Command("DF.COMMAND", "(\w+).(\w+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND)
         ]
 
-    def parse(self, line):
+    def identify_command(self, line):
+        line = line.strip()
         for command in self.param_regex_most_to_least_specific:
             if command.matches(line):
-                print("IT's a MATCH with {format}".format(format=command.humanForm))
                 return(command.asData())
-            else:
-                print("did not match: {format}".format(format=command.humanForm))
-        print("ALL MATCHES FAILED !!!")
         return { "command": Command.UNKNOWN }
 
 
