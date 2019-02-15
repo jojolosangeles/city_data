@@ -26,7 +26,7 @@ class DropColumnsCommand:
     def execute(self, commandData, context):
         dataFrameName = commandData[Key.DATA_FRAME_NAME]
         dataFrame = context.df_get(dataFrameName)
-        columnNames =  [col.strip() for col in commandData["params"].split(",")]
+        columnNames =  commandData[Key.PARAMETERS]
         context.df_put(dataFrameName, dataFrame.drop(columnNames, axis=1))
         print("Dropped {columnNames} from DataFrame '{dataFrameName}'".format(
         dataFrameName=dataFrameName, columnNames=columnNames))

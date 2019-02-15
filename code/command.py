@@ -23,6 +23,9 @@ class Command:
     # DropColumnsCommand
     DROP_COLUMNS = "drop"
 
+    # Chart Commands
+    CHART_BAR = "bar"
+
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"
     CAPTURED_BY_REGEX = "captured_by_regex" 
@@ -57,6 +60,8 @@ class Command:
         result = { "humanForm": self.humanForm, "command": self.key }
         for idx, val in enumerate(self.keys):
             result[val] = self.matchData.group(idx + 1)
+            if val == Key.PARAMETERS:
+                result[val] = [x.strip() for x in result[val].split(",")]
 
         return result
 

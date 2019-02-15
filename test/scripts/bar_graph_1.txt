@@ -22,4 +22,4 @@ bar_graph_1.save
 
 # Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
 # Notation for axes is passed to 
-bar_graph_1.bar X|Year:O|Year Y|count()|Number+of+Accidents
+bar_graph_1.bar X|Year:O|Year,Y|count()|Number of Accidents

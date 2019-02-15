@@ -1,4 +1,5 @@
 .pytest_cache
+code/commands/__pycache__
 data/real/**
 test/actual/**
 playground/**

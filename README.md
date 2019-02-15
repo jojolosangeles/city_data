@@ -14,21 +14,36 @@ for processing and visualizing data.
 
 ### Command summary:
 These load, process, and visualize data.
+
+Command formats:
+- Load: data_frame_name = path_to_CSV_file
+- Save: data_frame_name.save
+- Remove columns: data_frame_name.drop comma_delimited_list_of_column_names
+- Create column: data_frame_name.new_column_name <= python_code_returning_ALL_column_values
+
+Here is a test script that shows how these look:
 ```
-# load, save CSV data
-load <csv file> as <data frame name>
-save <data frame name>
+# Load collision data into "bar_graph_1" DataFrame
+bar_graph_1 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
 
-# create, drop columns in data
-create <data frame name> <column name> <python code>
-drop <data frame name> <column name>[,<another>,...]
+# Display the columns loaded (to verify the load was successful)
+bar_graph_1.columns
 
-# draw bar graph (or multiple bar graphs), save PNG file
-bar <data frame name> <x config> <y config>
-mbar <data frame name> <column name> <x config> <y config>
+# Get rid of the columns we aren't using
+bar_graph_1.drop DR Number, Date Reported, Area ID, Reporting District
+bar_graph_1.drop Crime Code, Crime Code Description, MO Codes, Premise Code
+bar_graph_1.drop Premise Description, Location
 
-# draw heat map, save PNG file
-heat <data frame name> <x dimension> <y dimension>
+# Create some new columns
+bar_graph_1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+bar_graph_1.Weekday <= [x.weekday() for x in dataFrame['Date']]
+bar_graph_1.Year <= [x.year for x in dataFrame['Date']]
+
+# Show the current state of the columns (to verify changes)
+bar_graph_1.columns
+
+# Save the DataFrame "bar_graph_1" into a CSV file "bar_graph_1.csv"
+bar_graph_1.save
 ```
 
 ### Example:  Heat Map for Northeast LA Collision Data

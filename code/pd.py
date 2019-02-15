@@ -28,30 +28,6 @@ class ShowCommand:
 
 
 
-class BarGraphCommand:
-    def execute(self, context, *args):
-        if len(*args) != 3:
-            for arg in args:
-                print(" {arg}".format(arg=arg))
-            raise ValueError("Expected 3 parameters: <dataframe name> <X column configuration> <Y column configuration>, got {numargs} parameters".format(numargs=len(*args)))
-        parameters = args[0]
-        dataFrameName = parameters[0]
-        xConfiguration = parameters[1].replace('+', ' ').split('|')
-        yConfiguration = parameters[2].replace('+', ' ').split('|')
-        dataFrame = context.df_get(dataFrameName)
-        self.draw_bar_graph(dataFrameName, dataFrame, xConfiguration, yConfiguration)
-
-    def draw_bar_graph(self, dataFrameName, dataFrame, xConfiguration, yConfiguration):
-        print("BarGraphCommand({dataFrameName}) {xConfiguration}, {yConfiguration}"
-            .format(dataFrameName=dataFrameName,xConfiguration=xConfiguration,yConfiguration=yConfiguration))
-
-        chart = alt.Chart(dataFrame).mark_bar().encode(
-            alt.X(xConfiguration[1], title=xConfiguration[2]),
-            alt.Y(yConfiguration[1], title=yConfiguration[2])
-        )
-        imageFileName = "{dataFrameName}.png".format(dataFrameName=dataFrameName)
-        chart.save(imageFileName, scale_factor=2.0)
-        print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
 
 class LineCommand:
     def execute(self, context, *args):

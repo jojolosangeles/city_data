@@ -4,6 +4,7 @@ import sys
 import fileinput
 from command import Command, Key, UnknownCommand
 from commands.data_frame import LoadCommand, SaveCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.chart import BarGraphCommand
 
 class CommandLineParser:
     def __init__(self):
@@ -19,7 +20,7 @@ class CommandLineParser:
             #
             Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
             Command("DF.COL<=CODE", "(\w+)\.(\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
-            Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
+            Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
             Command("DF.COMMAND", "(\w+).(\w+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND)
         ]
 
@@ -49,11 +50,15 @@ class CommandExecutor:
             Command.CREATE_COLUMN: CreateColumnCommand(),
             Command.DROP_COLUMNS: DropColumnsCommand(),
             Command.SHOW_COLUMNS: ShowColumnsCommand(),
+
+            # Chart commands
+            Command.CHART_BAR: BarGraphCommand(),
+
+            # none of the above
             Command.UNKNOWN: UnknownCommand()
         }
 
     def execute(self, commandData, context):
-        print("commandData={commandData}".format(commandData=commandData))
         self.commands[commandData["command"]].execute(commandData, context)
 
 class Repl:

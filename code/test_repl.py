@@ -18,7 +18,7 @@ def test_constructor2():
 #   B. Command("DF.COL<=CODE", "(\w+\.\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
 #   C. Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
 #   D. Command("DF.COMMAND", "(\w+).(\w+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND)
-#
+
 @pytest.fixture
 def clp():
     return CommandLineParser()
@@ -43,10 +43,13 @@ def test_B1(clp):
     assert command[Key.CODE] == "[ random code ,=*/.() ]"
 
 def test_C1(clp):
-    command = clp.identify_command("some_df.some_command   a, bb, param with spaces   ")
+    command = clp.identify_command("some_df.some_command   a,  bb,   param|with|(special)   ")
     assert command[Key.COMMAND] == "some_command"
     assert command[Key.DATA_FRAME_NAME] == "some_df"
-    assert command[Key.PARAMETERS] == "a, bb, param with spaces"
+    assert len(command[Key.PARAMETERS]) == 3
+    assert command[Key.PARAMETERS][0] == "a"
+    assert command[Key.PARAMETERS][1] == "bb"
+    assert command[Key.PARAMETERS][2] == "param|with|(special)"
 
 
 def test_D1(clp):
