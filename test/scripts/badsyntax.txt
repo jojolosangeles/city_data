@@ -1,2 +1,0 @@
-load data/x.csv
-load data/x.csv as

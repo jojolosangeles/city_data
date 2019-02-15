@@ -1,0 +1,25 @@
+# Load collision data into "bar_graph_1" DataFrame
+bar_graph_1 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
+
+# Display the columns loaded (to verify the load was successful)
+bar_graph_1.columns
+
+# Get rid of the columns we aren't using
+bar_graph_1.drop DR Number, Date Reported, Area ID, Reporting District
+bar_graph_1.drop Crime Code, Crime Code Description, MO Codes, Premise Code
+bar_graph_1.drop Premise Description, Location
+
+# Create some new columns
+bar_graph_1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+bar_graph_1.Weekday <= [x.weekday() for x in dataFrame['Date']]
+bar_graph_1.Year <= [x.year for x in dataFrame['Date']]
+
+# Show the current state of the columns (to verify changes)
+bar_graph_1.columns
+
+# Save the DataFrame "bar_graph_1" into a CSV file "bar_graph_1.csv"
+bar_graph_1.save
+
+# Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
+# Notation for axes is passed to 
+bar_graph_1.bar X|Year:O|Year Y|count()|Number+of+Accidents

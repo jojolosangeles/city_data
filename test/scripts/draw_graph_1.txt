@@ -1,3 +1,4 @@
-load expected/all_areas.csv as all_areas
-filter all_areas by Area Name
-mbar all_areas Area Name X|Year:O|Year Y|count()|Number+of+Accidents
+all_areas = expected/all_areas.csv
+all_areas.Area Name
+ X|Year:O|Year
+ Y|count()|Number of Accidents

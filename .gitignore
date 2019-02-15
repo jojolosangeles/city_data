@@ -1,5 +1,6 @@
 data/real/**
 test/actual/**
+playground/**
 csv/actualOutputData/**
 csv/__pycache__
 .idea/**

@@ -1,9 +1,9 @@
-load data/sample_100_Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
-columns all_areas
-drop all_areas DR Number, Date Reported, Area ID, Reporting District, Crime Code
-drop all_areas Crime Code Description, MO Codes, Premise Code, Premise Description, Location
-create all_areas Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-create all_areas Weekday [x.weekday() for x in dataFrame['Date']]
-create all_areas Year [x.year for x in dataFrame['Date']]
-create all_areas Hour [math.floor(x/100) for x in dataFrame['Time Occurred']]
-save all_areas
+all_areas = data/sample_100_Traffic_Collision_Data_from_2010_to_Present.csv
+all_areas.columns
+all_areas.drop DR Number, Date Reported, Area ID, Reporting District, Crime Code
+all_areas.drop Crime Code Description, MO Codes, Premise Code, Premise Description, Location
+all_areas.Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+all_areas.Weekday [x.weekday() for x in dataFrame['Date']]
+all_areas.Year [x.year for x in dataFrame['Date']]
+all_areas.Hour [math.floor(x/100) for x in dataFrame['Time Occurred']]
+all_areas.save
