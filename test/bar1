@@ -1,5 +1,5 @@
 set -x
-python ../pd.py scripts/bar_graph_1.txt > actual/bar_graph_1.out
+python ../code/main.py scripts/bar_graph_1.txt > actual/bar_graph_1.out
 diff expected/bar_graph_1.out actual/bar_graph_1.out
 mv bar_graph_1.csv actual
 diff expected/bar_graph_1.csv actual

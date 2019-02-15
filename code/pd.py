@@ -23,26 +23,10 @@ class ShowCommand:
         self.showDataFrame(context, dataFrameName)
 
     def showDataFrame(self, context, dataFrameName):
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         print(dataFrame)
 
 
-class CreateColumnCommand:
-    def execute(self, context, *args):
-        if len(*args) < 3:
-            for arg in args:
-                print(" {arg}".format(arg=arg))
-            raise ValueError("Expected 3 or more parameters: <dataframe name> <column name> <row transformation code>, got {numargs} parameters".format(numargs=len(*args)))
-        parameters = args[0]
-        dataFrameName = parameters[0]
-        columnName = parameters[1]
-        columnName.replace('+', ' ')
-        rowCode = ' '.join(parameters[2:])
-        print("{dataFrameName}.{columnName}=".format(dataFrameName=dataFrameName,columnName=columnName))
-        dataFrame = context.dataFrames[dataFrameName]
-        dataFrame[columnName] = eval(rowCode)
-        context.dataFrames[dataFrameName] = dataFrame
-        dataFrame = context.dataFrames[dataFrameName]
 
 class BarGraphCommand:
     def execute(self, context, *args):
@@ -54,7 +38,7 @@ class BarGraphCommand:
         dataFrameName = parameters[0]
         xConfiguration = parameters[1].replace('+', ' ').split('|')
         yConfiguration = parameters[2].replace('+', ' ').split('|')
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         self.draw_bar_graph(dataFrameName, dataFrame, xConfiguration, yConfiguration)
 
     def draw_bar_graph(self, dataFrameName, dataFrame, xConfiguration, yConfiguration):
@@ -85,7 +69,7 @@ class LineCommand:
     def draw_line(self, dataFrameName, xDimension, yDimension, colorDimension):
         print("LineCommand({dataFrameName}) {xDimension}, {yDimension} {colorDimension}"
             .format(dataFrameName=dataFrameName,xDimension=xDimension,yDimension=yDimension,colorDimension=colorDimension))
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         chart = alt.Chart(dataFrame).mark_line().encode(
             alt.X('count()', title=xDimension),
             alt.Y(yDimension, title=yDimension),
@@ -120,7 +104,7 @@ class MultiBarGraphCommand:
             if isinstance(value, str):
                 normalized_value = name_normalize(value)
                 dataFrameKey = "{dataFrameName}.{normalized_column_name}.{normalized_value}".format(dataFrameName=dataFrameName,normalized_column_name=normalized_column_name,normalized_value=normalized_value)
-                dataFrame = context.get_data_frame(dataFrameKey)
+                dataFrame = context.df_get(dataFrameKey)
                 print("Bar graph for {dataFrameKey}".format(dataFrameKey=dataFrameKey))
                 barGraph.draw_bar_graph(normalized_value, dataFrame, xConfiguration, yConfiguration)
 
@@ -134,7 +118,7 @@ class HeatMapCommand:
         dataFrameName = parameters[0]
         xDimension = parameters[1].replace('+', ' ')
         yDimension = parameters[2].replace('+', ' ')
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         # X|Year:O|Year Y|count()|Number+of+Accidents
         self.draw_heat_map(dataFrameName, dataFrame, xDimension, yDimension)
 
@@ -163,7 +147,7 @@ class UniqueCommand:
         dataFrameName = parameters[0]
         columnName = ' '.join(parameters[1:])
         normalized_column_name = name_normalize(columnName)
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         print("{dataFrameName}.{columnName} unique values".format(dataFrameName=dataFrameName,columnName=columnName))
         uniqueValuesForColumn = dataFrame[columnName].unique()
         for uniqueValue in uniqueValuesForColumn:
@@ -183,7 +167,7 @@ class FilterByCommand:
         dataFrameName = parameters[0]
         columnName = ' '.join(parameters[2:])
         normalized_column_name = name_normalize(columnName)
-        dataFrame = context.get_data_frame(dataFrameName)
+        dataFrame = context.df_get(dataFrameName)
         uniqueValuesForColumn = dataFrame[columnName].unique()
         context.register_unique_values_for_column(columnName, uniqueValuesForColumn)
         saveDataFrameCommand = SaveCommand()
@@ -193,7 +177,7 @@ class FilterByCommand:
                 keyName = "{dataFrameName}.{normalized_column_name}.{normalized_value}".format(dataFrameName=dataFrameName, normalized_column_name=normalized_column_name,normalized_value=normalized_value)
                 filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
                 print("Created DataFrame {keyName}".format(keyName=keyName))
-                context.put_data_frame(keyName, filtered_data)
+                context.df_put(keyName, filtered_data)
                 saveDataFrameCommand.saveDataFrame(context, keyName)
             else:
                 print("Skipping non-string")

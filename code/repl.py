@@ -1,7 +1,9 @@
 
 
+import sys
+import fileinput
 from command import Command, Key, UnknownCommand
-from commands.data_frame import LoadCommand, SaveCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.data_frame import LoadCommand, SaveCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
 
 class CommandLineParser:
     def __init__(self):
@@ -33,24 +35,25 @@ class Context:
     def __init__(self):
         self.dataFrames = {}
 
-    def get_data_frame(self, dataFrameName):
+    def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
 
-    def put_data_frame(self, dataFrameName, dataFrame):
+    def df_put(self, dataFrameName, dataFrame):
         self.dataFrames[dataFrameName] = dataFrame
 
 class CommandExecutor:
     def __init__(self):
         self.commands = {
             Command.LOAD: LoadCommand(),
+            Command.SAVE: SaveCommand(),
+            Command.CREATE_COLUMN: CreateColumnCommand(),
             Command.DROP_COLUMNS: DropColumnsCommand(),
             Command.SHOW_COLUMNS: ShowColumnsCommand(),
             Command.UNKNOWN: UnknownCommand()
         }
 
     def execute(self, commandData, context):
-        print("execute {commandData}".format(commandData=commandData))
-        print("commandData['command']={c}".format(c=commandData["command"]))
+        print("commandData={commandData}".format(commandData=commandData))
         self.commands[commandData["command"]].execute(commandData, context)
 
 class Repl:
@@ -66,9 +69,7 @@ class Repl:
             sys.stdout.flush()
 
     def process_line(self, line):
-        print(line)
-        commandData = self.commandLineParser.parse(line)
-        print(commandData)
+        commandData = self.commandLineParser.identify_command(line)
         self.commandExecutor.execute(commandData, self.context)
 
     def print_line(self, line):

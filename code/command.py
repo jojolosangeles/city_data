@@ -13,8 +13,9 @@ class Key:
 
 class Command:
     # command keys that map to a specific implementation
-    # LoadCommand
+    # LoadCommand, SaveCommand
     LOAD = "load"
+    SAVE = "save"
     # CreateColumnCommand
     CREATE_COLUMN = "create"
     # ShowColumnsCommand
