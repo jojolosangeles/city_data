@@ -14,6 +14,7 @@ def test_constructor2():
 # 
 #  Verify the forms we are using match correctly
 #
+#   A. Command("DF.COL.COMMAND PARAMS", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS)
 #   A. Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
 #   B. Command("DF.COL<=CODE", "(\w+\.\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
 #   C. Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
@@ -22,6 +23,15 @@ def test_constructor2():
 @pytest.fixture
 def clp():
     return CommandLineParser()
+
+def test_A0(clp):
+    command  = clp.identify_command("all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents")
+    assert command[Key.COMMAND] == "bar"
+    assert command[Key.DATA_FRAME_NAME] == "all_areas"
+    assert command[Key.COLUMN_NAME] == "Area Name"
+    assert len(command[Key.PARAMETERS]) == 2
+    assert command[Key.PARAMETERS][0] == "X|Year:O|Year"
+    assert command[Key.PARAMETERS][1] == "Y|count()|Number of Accidents"
 
 def test_A1(clp):
     command = clp.identify_command("anyname = path_to_file")

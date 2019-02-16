@@ -19,6 +19,7 @@ class CommandLineParser:
             # CODE free form python code that generates all values for a new DataFrame column
             # PARAMS list of free form text names (with spaces allowed), separated by commas
             #
+            Command("DF.COL.COMMAND PARAMS", "(\w+)\.([ \w]+)\.(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS),
             Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
             Command("DF.COL<=CODE", "(\w+)\.(\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
             Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
@@ -29,8 +30,8 @@ class CommandLineParser:
         line = line.strip()
         for command in self.param_regex_most_to_least_specific:
             if command.matches(line):
-                return(command.asData(), True)
-        return { "command": Command.UNKNOWN }, True
+                return command.asData()
+        return { "command": Command.UNKNOWN }
 
 
 class Context:
@@ -77,9 +78,8 @@ class Repl:
             sys.stdout.flush()
 
     def process_line(self, line):
-        commandData,isComplete = self.commandLineParser.identify_command(line)
-        if isComplete:
-            self.commandExecutor.execute(commandData, self.context)
+        commandData = self.commandLineParser.identify_command(line)
+        self.commandExecutor.execute(commandData, self.context)
 
     def print_line(self, line):
         if not self.interactive:
