@@ -42,6 +42,10 @@ class Context:
     def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
 
+    def df_get_slice(self, dataFrameName, columnName):
+        sliceDataFrameName = self.dataFrameFileNames.df_slice_key(dataFrameName, columnName)
+        return self.df_get(sliceDataFrameName)
+        
     def df_put(self, dataFrameName, dataFrame):
         self.dataFrames[dataFrameName] = dataFrame
 

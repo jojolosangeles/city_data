@@ -30,9 +30,9 @@ Dropped ['Premise Description', 'Location'] from DataFrame 'bar_graph_1'
 > 
 > # Save the DataFrame "bar_graph_1" into a CSV file "bar_graph_1.csv"
 > bar_graph_1.save
-Saved CSV File 'bar_graph_1.csv'
+Saved CSV File 'actual/bar_graph_1.csv'
 > 
 > # Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
 > # Notation for axes is passed to
 > bar_graph_1.bar X|Year:O|Year,Y|count()|Number of Accidents
-Saved Bar Graph PNG 'bar_graph_1.png'
+Saved Bar Graph PNG 'actual/bar_graph_1.png'

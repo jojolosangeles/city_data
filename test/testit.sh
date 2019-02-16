@@ -1,10 +1,8 @@
 set -x
 if [ ! -f "actual/bar_graph_1.out" ]; then
   python ../code/main.py scripts/bar_graph_1.txt > actual/bar_graph_1.out
-  diff expected/bar_graph_1.out actual/bar_graph_1.out
-  mv bar_graph_1.csv actual
+  diff expected/bar_graph_1.out actual
   diff expected/bar_graph_1.csv actual
-  mv bar_graph_1.png actual
   diff -b expected/bar_graph_1.png actual
 fi
 if [ ! -f "actual/create_column.out" ]; then

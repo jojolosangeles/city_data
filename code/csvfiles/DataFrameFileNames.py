@@ -17,6 +17,16 @@ class DataFrameFileNames:
         value = self.name_normalize(value)
         return "{dataFrameName}.{columnName}.{value}".format(dataFrameName=dataFrameName, columnName=columnName, value=value)
 
+    def df_slice_key(self, dataFrameName, columnName):
+        if columnName:
+            return "{dataFrameName}.{columnName}".format(dataFrameName=dataFrameName, columnName=self.name_normalize(columnName))
+        else:
+            return dataFrameName
+
+    def df_image_fileName(self, dataFrameName, columnName):
+        fileName = "{slicekey}.png".format(slicekey=self.df_slice_key(dataFrameName, columnName))
+        return os.path.join(self.basePath, fileName)
+
     def df_filter_fileName(self, dataFrameName, columnName, value):
         keyName = self.df_key_name(dataFrameName, columnName, value)
         fileName = "{keyName}.csv".format(keyName=keyName)
