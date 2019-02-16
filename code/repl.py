@@ -42,10 +42,11 @@ class Context:
     def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
 
-    def df_get_slice(self, dataFrameName, columnName):
-        sliceDataFrameName = self.dataFrameFileNames.df_slice_key(dataFrameName, columnName)
-        return self.df_get(sliceDataFrameName)
-        
+    def df_slice_names(self, dataFrameName, columnName):
+        dataFrame = self.df_get(dataFrameName)
+        uniqueValues = dataFrame[columnName].unique()
+        return self.dataFrameFileNames.df_slice_names(dataFrameName, columnName, uniqueValues)
+
     def df_put(self, dataFrameName, dataFrame):
         self.dataFrames[dataFrameName] = dataFrame
 

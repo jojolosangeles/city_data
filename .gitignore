@@ -1,8 +1,9 @@
+__pycache__/
+*.pyc
 .pytest_cache
-code/commands/__pycache__
+**/__pycache__/**
 data/real/**
 test/actual/**
 playground/**
-code/__pycache__
 code/.pytest_cache
 .idea/**

@@ -1,0 +1,3 @@
+all_areas = expected/all_areas.csv
+all_areas.Area_Name.bar X|Year:O|Year, Y|count()|Number of Accidents
+all_areas.Area_Name.bar X|Year:O|Year, Y|count()|Number of Accidents

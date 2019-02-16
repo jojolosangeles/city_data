@@ -23,8 +23,16 @@ class DataFrameFileNames:
         else:
             return dataFrameName
 
-    def df_image_fileName(self, dataFrameName, columnName):
-        fileName = "{slicekey}.png".format(slicekey=self.df_slice_key(dataFrameName, columnName))
+    def df_slice_names(self, dataFrameName, columnName, columnValues):
+        sliceKey = self.df_slice_key(dataFrameName, columnName)
+        result = []
+        for val in columnValues:
+            if isinstance(val, str):
+                result.append("{sliceKey}.{valueKey}".format(sliceKey=sliceKey,valueKey=self.name_normalize(val)))
+        return result
+
+    def df_image_fileName(self, sliceKey):
+        fileName = "{slicekey}.png".format(slicekey=sliceKey)
         return os.path.join(self.basePath, fileName)
 
     def df_filter_fileName(self, dataFrameName, columnName, value):
