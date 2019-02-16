@@ -11,7 +11,7 @@ class SaveCommand:
     def execute(self, commandData, context):
         dataFrameName = commandData[Key.DATA_FRAME_NAME]
         dataFrame = context.df_get(dataFrameName)
-        fileName = "{dataFrameName}.csv".format(dataFrameName=dataFrameName)
+        fileName = context.dataFrameFileNames.df_fileName(dataFrameName)
         dataFrame.to_csv(fileName)
         print("Saved CSV File '{fileName}'".format(fileName=fileName))
 
@@ -21,7 +21,6 @@ class CreateColumnCommand:
         columnName = commandData[Key.COLUMN_NAME]
         code = commandData[Key.CODE]
         dataFrame[columnName] = eval(code)
-    
 
 class DropColumnsCommand:
     def execute(self, commandData, context):
@@ -36,5 +35,22 @@ class ShowColumnsCommand:
     def execute(self, commandData, context):
         dataFrame = context.df_get(commandData[Key.DATA_FRAME_NAME])
         print(dataFrame.columns.values)
+
+class FilterCommand:
+   def execute(self, commandData, context):
+        dataFrameName = commandData[Key.DATA_FRAME_NAME]
+        dataFrame = context.df_get(dataFrameName)
+        columnName = commandData[Key.PARAMETERS][0]
+        uniqueValuesForColumn = dataFrame[columnName].unique()
+
+        for uniqueValue in uniqueValuesForColumn:
+            if isinstance(uniqueValue, str):
+                keyName = context.dataFrameFileNames.df_key_name(dataFrameName, columnName, uniqueValue)
+                filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
+                print("Created DataFrame {keyName}, saved CSV".format(keyName=keyName))
+                context.df_put(keyName, filtered_data)
+                filtered_data.to_csv(context.dataFrameFileNames.df_filter_fileName(dataFrameName, columnName, uniqueValue))
+            else:
+                print("Skipping non-string")
 
 

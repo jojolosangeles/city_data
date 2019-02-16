@@ -2,8 +2,9 @@
 
 import sys
 import fileinput
+from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
-from commands.data_frame import LoadCommand, SaveCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.data_frame import LoadCommand, SaveCommand, FilterCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
 from commands.chart import BarGraphCommand
 
 class CommandLineParser:
@@ -33,8 +34,9 @@ class CommandLineParser:
 
 
 class Context:
-    def __init__(self):
+    def __init__(self, dataFrameFileNames):
         self.dataFrames = {}
+        self.dataFrameFileNames = dataFrameFileNames
 
     def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
@@ -50,6 +52,7 @@ class CommandExecutor:
             Command.CREATE_COLUMN: CreateColumnCommand(),
             Command.DROP_COLUMNS: DropColumnsCommand(),
             Command.SHOW_COLUMNS: ShowColumnsCommand(),
+            Command.FILTER: FilterCommand(),
 
             # Graph commands
             Command.BAR_GRAPH: BarGraphCommand(),
@@ -63,7 +66,7 @@ class CommandExecutor:
 
 class Repl:
     def __init__(self, interactive):
-        self.context = Context()
+        self.context = Context(DataFrameFileNames())
         self.commandLineParser = CommandLineParser()
         self.commandExecutor = CommandExecutor()
         self.interactive = interactive

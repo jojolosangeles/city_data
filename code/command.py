@@ -23,6 +23,8 @@ class Command:
     SHOW_COLUMNS = "columns"
     # DropColumnsCommand
     DROP_COLUMNS = "drop"
+    # FilterCommand
+    FILTER = "filter"
 
     # Graph Commands
     BAR_GRAPH = "bar"

@@ -132,29 +132,3 @@ class UniqueCommand:
         print("")
 
 
-class FilterByCommand:
-    def execute(self, context, *args):
-        if len(*args) < 3:
-            for arg in args:
-                print(" {arg}".format(arg=arg))
-            raise ValueError("Expected 3 parameters: <dataframe name> by <column name>, got {numargs} parameters".format(numargs=len(*args)))
-
-        parameters = args[0]
-        dataFrameName = parameters[0]
-        columnName = ' '.join(parameters[2:])
-        normalized_column_name = name_normalize(columnName)
-        dataFrame = context.df_get(dataFrameName)
-        uniqueValuesForColumn = dataFrame[columnName].unique()
-        context.register_unique_values_for_column(columnName, uniqueValuesForColumn)
-        saveDataFrameCommand = SaveCommand()
-        for uniqueValue in uniqueValuesForColumn:
-            if isinstance(uniqueValue, str):
-                normalized_value = name_normalize(uniqueValue)
-                keyName = "{dataFrameName}.{normalized_column_name}.{normalized_value}".format(dataFrameName=dataFrameName, normalized_column_name=normalized_column_name,normalized_value=normalized_value)
-                filtered_data = dataFrame.loc[dataFrame[columnName] == uniqueValue]
-                print("Created DataFrame {keyName}".format(keyName=keyName))
-                context.df_put(keyName, filtered_data)
-                saveDataFrameCommand.saveDataFrame(context, keyName)
-            else:
-                print("Skipping non-string")
-
