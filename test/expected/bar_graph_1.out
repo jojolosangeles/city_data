@@ -35,4 +35,5 @@ Saved CSV File 'actual/bar_graph_1.csv'
 > # Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
 > # Notation for axes is passed to
 > bar_graph_1.bar X|Year:O|Year,Y|count()|Number of Accidents
+Making bar chart for DataFrame bar_graph_1
 Saved Bar Graph PNG 'actual/bar_graph_1.png'

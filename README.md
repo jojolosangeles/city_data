@@ -21,16 +21,18 @@ Command formats:
 - Remove columns: data_frame_name.drop comma_delimited_list_of_column_names
 - Create column: data_frame_name.new_column_name <= python_code_returning_ALL_column_values
 
-Note: the python code is executed with "eval", so if it requires any imports
-those have to already be present in commands/data_frame.py (e.g. this imports "math"
-due to a script reference)
-Here is a test script that shows how these look:
+Note: the python code is executed with "eval", any imports it requires
+need to be manually put in commands/data_frame.py (e.g. this imports "math"
+due to a script reference, even though it is not used in the file)
+
+### Example #1:  Test data, 20 records
+
+Here is a test script loads data, removes columns, adds new columns, saves the
+data into a CSV file, and draws a bar graph:
+
 ```
 # Load collision data into "bar_graph_1" DataFrame
 bar_graph_1 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
-
-# Display the columns loaded (to verify the load was successful)
-bar_graph_1.columns
 
 # Get rid of the columns we aren't using
 bar_graph_1.drop DR Number, Date Reported, Area ID, Reporting District
@@ -42,81 +44,85 @@ bar_graph_1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
 bar_graph_1.Weekday <= [x.weekday() for x in dataFrame['Date']]
 bar_graph_1.Year <= [x.year for x in dataFrame['Date']]
 
-# Show the current state of the columns (to verify changes)
-bar_graph_1.columns
-
 # Save the DataFrame "bar_graph_1" into a CSV file "bar_graph_1.csv"
 bar_graph_1.save
+
+# Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
+# Notation for axes is passed to altair
+bar_graph_1.bar X|Year:O|Year, Y|count()|Number of Accidents
 ```
 
-### Example:  Heat Map for Northeast LA Collision Data
+This resulting graph looks like this:
 
-I live in NELA, and a few communities have put up "Slow Down" signs, and there
-is a city focus on significantly reducing the number of traffic accidents.
+![alt text](./test/expected/bar_graph_1.png "Sample Data bar graph")
 
-Given the city data, how would I get a Heat Map that shows how accidents are
-distributed by Day of the Week and Hour of the Day?   Here's what it looks like:
+### Example #2:  Heat Map for Northeast LA Collision Data
+
+Given the city collision data, how would I get a Heat Map that shows how accidents are
+distributed by Day of the Week and Hour of the Day?   Here's what it looks like for Northeast LA:
 
 ![alt text](./test/expected/Northeast.Hour.Weekday.heatmap.png "Northeast LA Accidents-by-Weekday-and-Hour")
 
 ```
-load expected/all_areas.Area_Name.Northeast.csv as Northeast
-heat Northeast Hour Weekday
+Northeast = expected/all_areas.Area_Name.Northeast.csv
+Northeast.Hour.Weekday => heatmap
 ```
 
-
-It looks like Northeast LA gets quite a few more accidents at 5 PM on Fridays.  How does that look for
-all of Los Angeles?
+Here is what it looks like for all LA:
 
 ![alt text](./test/expected/all_areas.Hour.Weekday.heatmap.png "Los Angeles Accidents-by-Weekday-and-Hour")
 
 ```
-load expected/all_areas.csv as all_areas
-heat all_areas Hour Weekday
+all_areas = expected/all_areas.csv
+all_areas.Hour.Weekday => heatmap
 ```
-
 
 Both those depend on CSV files generated from the Los Angeles city
-data file.  Those files were generated with this code:
+data file.  The "all_areas.csv" file was generated with this script:
 ```
 # Load collision data into DataFrame "all_areas"
-load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+all_areas = ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv
 
 # Display the columns (verify load)
-columns all_areas
+all_areas.columns
 
 # Drop unused columns
-drop all_areas DR Number, Date Reported, Area ID, Reporting District, Crime Code
-drop all_areas Crime Code Description, MO Codes, Premise Code, Premise Description, Location
+all_areas.drop DR Number, Date Reported, Area ID, Reporting District, Crime Code
+all_areas.drop Crime Code Description, MO Codes, Premise Code, Premise Description, Location
 
 # Create columns for grouping
-create all_areas Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-create all_areas Weekday [x.weekday() for x in dataFrame['Date']]
-create all_areas Year [x.year for x in dataFrame['Date']]
-create all_areas Hour [math.floor(x/100) for x in dataFrame['Time Occurred']]
+all_areas.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+all_areas.Weekday <= [x.weekday() for x in dataFrame['Date']]
+all_areas.Year  <= [x.year for x in dataFrame['Date']]
+all_areas.Hour <= [math.floor(x/100) for x in dataFrame['Time Occurred']]
 
 # Save DataFrame "all_areas" to CSV file "all_areas.csv"
-save all_areas
+all_areas.save
+```
 
-# create CSV files for each "Area Name"
-# This creates files like:  all_areas.Area_Name.Northeast.csv
-filter all_areas by Area Name
+To get the individual CSV files for each area, for example the CSV file all_areas.Area_Name.Northeast.csv:
 
+```
+# all_areas is the DataFrame from the above example
+# 
+# create a CSV file for unique "Area Name" value:  all_areas.Area_Name.<value>.csv
+#
+all_areas.filter Area Name
 ```
 ##### DataFrame:  Load a CSV file into DataFrame
 The command below loads a CSV file into a DataFrame (accessed by other commands)
 named "all_areas"
 
 ```
-load ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv as all_areas
+all_areas = ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv
 ```
 
 ##### DataFrame:  Add a column
 To create a new column based on values in an existing column:
 ```
-create graph1 Date [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-create graph1 Weekday [x.weekday() for x in dataFrame['Date']]
-create graph1 Year [x.year for x in dataFrame['Date']]
+graph1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
+graph1.Weekday <= [x.weekday() for x in dataFrame['Date']]
+graph1.Year <= [x.year for x in dataFrame['Date']]
 ```
 The above creates DataFrame columns "Date", "Weekday", and "Year".  The
 code to the right of the column name is Python code used to assign each
@@ -131,7 +137,7 @@ value.
 
 One or more columns can be dropped.
 ```
-drop all_areas DR Number, Date Reported, Area ID, Reporting District
+all_areas.drop DR Number, Date Reported, Area ID, Reporting District
 ```
 
 ##### DataFrame: save CSV file
@@ -139,13 +145,19 @@ Always saves to <DataFrame name>.csv.  The DataFrame name
 is set when DataFrame is loaded.
 
 ```
-save all_areas
+all_areas.save
 
 ```
 The above saves DataFrame "all_areas" to a file "all_areas.csv"
 
 ##### Graph: draw a Bar Graph
 
+Use format:  <DataFrame name>.bar <X dimension config>, <Y dimension config>
+
+The configuration values are passed to altair
+```
+bar_graph_1.bar X|Year:O|Year, Y|count()|Number of Accidents
+```
 ##### Graph: draw multiple Bar Graphs
 ```
 load expected/all_areas.csv as all_areas
