@@ -109,6 +109,19 @@ To get the individual CSV files for each area, for example the CSV file all_area
 #
 all_areas.filter Area Name
 ```
+
+To see accidents by Area Name requires deleting unused columns, otherwise I'm getting
+an error (not sure why, or if there is a better way to draw the graph).
+
+```
+# Drop all the columns we don't need for the bar graph
+all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Victim Age, Address, Victim Descent
+all_areas.drop Victim Sex, Cross Street, Date, Weekday, Hour
+
+all_areas.bar X|Area Name:N|Area Name, Y|count()|Number of Accidents
+```
+![alt text](./test/expected/all_areas.png "Accidents by Area")
+
 ##### DataFrame:  Load a CSV file into DataFrame
 The command below loads a CSV file into a DataFrame (accessed by other commands)
 named "all_areas"
@@ -160,26 +173,24 @@ bar_graph_1.bar X|Year:O|Year, Y|count()|Number of Accidents
 ```
 ##### Graph: draw multiple Bar Graphs
 ```
-load expected/all_areas.csv as all_areas
-filter all_areas by Area Name
-mbar all_areas Area Name X|Year:O|Year Y|count()|Number+of+Accidents
+all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents
 ```
-This creates bar graphs for each year, one bar graph per area.
+This creates one bar graph for each Area Name.
 Below is the "Northeast.png" bargraph.  A similar graph is created
 for each area included in the collision data.
 
-![alt text](./test/expected/Northeast.png "Northeast LA accidents by year")
+![alt text](./test/expected/all_areas.Area_Name.Northeast.png "Northeast LA accidents by year")
 
 ##### Graph: draw a Heat Map
 
 ```
-heat <dataFrameName> <xDimension> <yDimension>
+Northeast = expected/all_areas.Area_Name.Northeast.csv
+Northeast.Hour.Weekday => heatmap
+Northeast.Hour.Victim Sex => heatmap
 ```
 
-For example, if with a "Year" and "Weekday" column in the
-DataFrame "all_areas", the command to draw a heatmap
-is:
-```
-heat all_areas Year Weekday
-```
-The heatmap image is saved to "all_areas.Year.Weekday.heatmap.png"
+This creates two Heat Maps from Northeast LA data
+
+![alt text](./test/expected/Northeast.Hour.Weekday.heatmap.png "Northeast LA by Hour WeekDay")
+
+![alt text](./test/expected/Northeast.Hour.Victim_Sex.heatmap.png "Northeast LA by Hour and Victim Sex")

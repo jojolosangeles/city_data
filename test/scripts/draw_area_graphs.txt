@@ -3,3 +3,11 @@ all_areas.filter Area Name
 all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents
 all_areas.filter Victim Sex
 all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents
+
+#
+#  To see accident count by Area Name, we need to get rid of the unnecessary data
+#
+all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Victim Age, Address, Victim Descent
+all_areas.drop Victim Sex, Cross Street, Date, Weekday, Hour
+
+all_areas.bar X|Area Name:N|Area Name, Y|count()|Number of Accidents
