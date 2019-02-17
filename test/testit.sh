@@ -62,21 +62,18 @@ if [ ! -f "actual/draw_area_graphs.out" ]; then
   diff -b expected/all_areas.Area_Name.Wilshire.png actual
 fi
 
-# if [ ! -f "actual/noinput.out" ]; then
-#   python ../pd.py scripts/noinput.txt > actual/noinput.out
-#   diff expected/noinput.out actual/noinput.out
-# fi
-# if [ ! -f "actual/badsyntax.out" ]; then
-#   python ../pd.py scripts/badsyntax.txt > actual/badsyntax.out
-#   diff expected/badsyntax.out actual/badsyntax.out
-# fi
+if [ ! -f "actual/drop_columns.out" ]; then
+  python ../code/main.py scripts/drop_columns.txt > actual/drop_columns.out
+  diff expected/drop_columns.out actual/drop_columns.out
+fi
+
+if [ ! -f "actual/heat.out" ]; then
+  python ../code/main.py scripts/heat.txt > actual/heat.out
+  diff expected/heat.out actual/heat.out
+fi
 # if [ ! -f "actual/load_data_1.out" ]; then
 #   python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out
 #   diff expected/load_data_1.out actual/load_data_1.out
-# fi
-# if [ ! -f "actual/drop_columns.out" ]; then
-#   python ../pd.py scripts/drop_columns.txt > actual/drop_columns.out
-#   diff expected/drop_columns.out actual/drop_columns.out
 # fi
 # if [ ! -f "actual/save_data_1.out" ]; then
 #   python ../pd.py scripts/save_data_1.txt > actual/save_data_1.out

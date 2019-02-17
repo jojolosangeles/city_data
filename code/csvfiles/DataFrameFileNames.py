@@ -31,6 +31,11 @@ class DataFrameFileNames:
                 result.append("{sliceKey}.{valueKey}".format(sliceKey=sliceKey,valueKey=self.name_normalize(val)))
         return result
 
+    def df_heatmap_image_fileName(self, dataFrameName, xDimension, yDimension):
+        keyName = self.df_key_name(dataFrameName, xDimension, yDimension)
+        imageFileName = "{keyName}.heatmap.png".format(keyName=keyName)
+        return os.path.join(self.basePath, imageFileName)
+
     def df_image_fileName(self, sliceKey):
         fileName = "{slicekey}.png".format(slicekey=sliceKey)
         return os.path.join(self.basePath, fileName)

@@ -1,11 +1,9 @@
-
-
 import sys
 import fileinput
 from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
 from commands.data_frame import LoadCommand, SaveCommand, FilterCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
-from commands.chart import BarGraphCommand
+from commands.chart import BarGraphCommand, HeatMapCommand
 
 class CommandLineParser:
     def __init__(self):
@@ -15,10 +13,12 @@ class CommandLineParser:
             #
             # DF maps to "dataFrameName" (Key.DATA_FRAME_NAME)
             # COL maps to "columnName" (Key.COLUMN_NAME)
+            # COL1, COL2 map to "column_1", "column_2" (Key.COLUMN_1, Key.COLUMN_2)
             # COMMAND maps to the Python class that executes the command
             # CODE free form python code that generates all values for a new DataFrame column
             # PARAMS list of free form text names (with spaces allowed), separated by commas
             #
+            Command("DF.COL1.COL2 => COMMAND", "(\w+)\.([ \w]+)\.([ \w]+)\s+=>\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_1, Key.COLUMN_2, Key.COMMAND),
             Command("DF.COL.COMMAND PARAMS", "(\w+)\.([ \w]+)\.(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS),
             Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
             Command("DF.COL<=CODE", "(\w+)\.(\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
@@ -50,6 +50,7 @@ class Context:
     def df_put(self, dataFrameName, dataFrame):
         self.dataFrames[dataFrameName] = dataFrame
 
+
 class CommandExecutor:
     def __init__(self):
         self.commands = {
@@ -62,6 +63,7 @@ class CommandExecutor:
 
             # Graph commands
             Command.BAR_GRAPH: BarGraphCommand(),
+            Command.HEAT_MAP: HeatMapCommand(),
 
             # none of the above
             Command.UNKNOWN: UnknownCommand()

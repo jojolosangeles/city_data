@@ -1,23 +1,9 @@
 Test: scripts/heat.txt
-> load expected/all_areas.csv as all_areas
-Loaded expected/all_areas.csv into DataFrame all_areas
-> heat all_areas Hour Weekday
-HeatMapCommand(all_areas) Hour, Weekday
-Saved PNG heatmap: all_areas.Hour.Weekday.heatmap.png
-> heat all_areas Hour Victim+Sex
-HeatMapCommand(all_areas) Hour, Victim Sex
-Saved PNG heatmap: all_areas.Hour.Victim_Sex.heatmap.png
-> create all_areas Age [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in dataFrame['Victim Age']]
-all_areas.Age=
-> heat all_areas Age Weekday
-HeatMapCommand(all_areas) Age, Weekday
-Saved PNG heatmap: all_areas.Age.Weekday.heatmap.png
-> load expected/all_areas.Area_Name.Northeast.csv as Northeast
+> Northeast = expected/all_areas.Area_Name.Northeast.csv
 Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame Northeast
-> heat Northeast Hour Weekday
+> Northeast.Hour.Weekday => heatmap
 HeatMapCommand(Northeast) Hour, Weekday
-Saved PNG heatmap: Northeast.Hour.Weekday.heatmap.png
-> heat Northeast Hour Victim+Sex
+Saved PNG heatmap: actual/Northeast.Hour.Weekday.heatmap.png
+> Northeast.Hour.Victim Sex => heatmap
 HeatMapCommand(Northeast) Hour, Victim Sex
-Saved PNG heatmap: Northeast.Hour.Victim_Sex.heatmap.png
-Test completed: scripts/heat.txt
+Saved PNG heatmap: actual/Northeast.Hour.Victim_Sex.heatmap.png

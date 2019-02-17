@@ -1,25 +1,22 @@
 Test: scripts/drop_columns.txt
-> load data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv as sample20
+> sample20 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
 Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame sample20
-> columns sample20
+> sample20.columns
 ['DR Number' 'Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID'
  'Area Name' 'Reporting District' 'Crime Code' 'Crime Code Description'
  'MO Codes' 'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
-> drop sample20 DR Number
-Dropping ['DR Number'] from DataFrame 'sample20'
-Columns dropped
-> columns sample20
+> sample20.drop DR Number
+Dropped ['DR Number'] from DataFrame 'sample20'
+> sample20.columns
 ['Date Reported' 'Date Occurred' 'Time Occurred' 'Area ID' 'Area Name'
  'Reporting District' 'Crime Code' 'Crime Code Description' 'MO Codes'
  'Victim Age' 'Victim Sex' 'Victim Descent' 'Premise Code'
  'Premise Description' 'Address' 'Cross Street' 'Location']
-> drop sample20 Date Reported, Area ID
-Dropping ['Date Reported', 'Area ID'] from DataFrame 'sample20'
-Columns dropped
-> columns sample20
+> sample20.drop Date Reported, Area ID
+Dropped ['Date Reported', 'Area ID'] from DataFrame 'sample20'
+> sample20.columns
 ['Date Occurred' 'Time Occurred' 'Area Name' 'Reporting District'
  'Crime Code' 'Crime Code Description' 'MO Codes' 'Victim Age'
  'Victim Sex' 'Victim Descent' 'Premise Code' 'Premise Description'
  'Address' 'Cross Street' 'Location']
-Test completed: scripts/drop_columns.txt

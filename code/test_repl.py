@@ -14,7 +14,8 @@ def test_constructor2():
 # 
 #  Verify the forms we are using match correctly
 #
-#   A. Command("DF.COL.COMMAND PARAMS", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS)
+#   A00. Command("DF.COL1.COL2 => COMMAND")
+#   A0. Command("DF.COL.COMMAND PARAMS", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS)
 #   A. Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
 #   B. Command("DF.COL<=CODE", "(\w+\.\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
 #   C. Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+(\w[\w\s,]*)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
@@ -23,6 +24,14 @@ def test_constructor2():
 @pytest.fixture
 def clp():
     return CommandLineParser()
+
+def test_A00(clp):
+    command = clp.identify_command("Northeast.Hour.Weekday => heatmap")
+    assert command[Key.HUMAN_FORM] == "DF.COL1.COL2 => COMMAND"
+    assert command[Key.DATA_FRAME_NAME] == "Northeast"
+    assert command[Key.COLUMN_1] == "Hour"
+    assert command[Key.COLUMN_2] == "Weekday"
+    assert command[Key.COMMAND] == "heatmap"
 
 def test_A0(clp):
     command  = clp.identify_command("all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents")

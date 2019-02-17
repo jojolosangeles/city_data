@@ -4,13 +4,16 @@ import re
 #  These are the values that get extrated from commands
 #
 class Key:
+    HUMAN_FORM="humanForm"
+    COLUMN_1="column_1"
+    COLUMN_2="column_2"
     DATA_FRAME_NAME="dataFrameName"
     FILE_NAME="fileName"
     COLUMN_NAME="columnName"
     COMMAND="command"
     CODE="code"
     PARAMETERS="params"
-    GRAPH_TYPE: "bar"
+
 
 class Command:
     # command keys that map to a specific implementation
@@ -28,6 +31,7 @@ class Command:
 
     # Graph Commands
     BAR_GRAPH = "bar"
+    HEAT_MAP = "heatmap"
 
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"
@@ -60,7 +64,7 @@ class Command:
         #  code -- free form Python code
         #  params -- free form text, alpha-numeric and commas allowed
         #
-        result = { "humanForm": self.humanForm, "command": self.key }
+        result = { Key.HUMAN_FORM: self.humanForm, Key.COMMAND: self.key }
         for idx, val in enumerate(self.keys):
             result[val] = self.matchData.group(idx + 1)
             if val == Key.PARAMETERS:
