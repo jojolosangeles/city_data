@@ -165,7 +165,7 @@ The above saves DataFrame "all_areas" to a file "all_areas.csv"
 
 ##### Graph: draw a Bar Graph
 
-Use format:  <DataFrame name>.bar <X dimension config>, <Y dimension config>
+Use format:  \<DataFrame name\>.bar \<X dimension config\>, \<Y dimension config\>
 
 The configuration values are passed to altair
 ```

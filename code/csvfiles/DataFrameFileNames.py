@@ -31,6 +31,11 @@ class DataFrameFileNames:
                 result.append("{sliceKey}.{valueKey}".format(sliceKey=sliceKey,valueKey=self.name_normalize(val)))
         return result
 
+    def df_stacked_image_fileName(self, dataFrameName, xDimension, yDimension):
+        keyName = self.df_key_name(dataFrameName, xDimension, yDimension)
+        imageFileName = "{keyName}.stacked_line.png".format(keyName=keyName)
+        return os.path.join(self.basePath, imageFileName)
+
     def df_heatmap_image_fileName(self, dataFrameName, xDimension, yDimension):
         keyName = self.df_key_name(dataFrameName, xDimension, yDimension)
         imageFileName = "{keyName}.heatmap.png".format(keyName=keyName)

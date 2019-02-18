@@ -2,8 +2,8 @@ import sys
 import fileinput
 from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
-from commands.data_frame import LoadCommand, SaveCommand, FilterCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
-from commands.chart import BarGraphCommand, HeatMapCommand
+from commands.data_frame import XrowCommand, LoadCommand, SaveCommand, FilterCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.chart import BarGraphCommand, HeatMapCommand, StackedLineCommand
 
 class CommandLineParser:
     def __init__(self):
@@ -60,10 +60,12 @@ class CommandExecutor:
             Command.DROP_COLUMNS: DropColumnsCommand(),
             Command.SHOW_COLUMNS: ShowColumnsCommand(),
             Command.FILTER: FilterCommand(),
+            Command.XROW: XrowCommand(),
 
             # Graph commands
             Command.BAR_GRAPH: BarGraphCommand(),
             Command.HEAT_MAP: HeatMapCommand(),
+            Command.STACKED_LINE: StackedLineCommand(),
 
             # none of the above
             Command.UNKNOWN: UnknownCommand()

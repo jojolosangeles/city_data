@@ -25,6 +25,14 @@ def test_constructor2():
 def clp():
     return CommandLineParser()
 
+def test_x(clp):
+    command = clp.identify_command("all_areas.drop Year=2019")
+    assert command[Key.HUMAN_FORM] == "DF.COMMAND PARAMS"
+    assert command[Key.DATA_FRAME_NAME] == "all_areas"
+    assert len(command[Key.PARAMETERS]) == 1
+    assert command[Key.PARAMETERS][0] == "Year=2019"
+    assert command[Key.COMMAND] == "drop"
+    
 def test_A00(clp):
     command = clp.identify_command("Northeast.Hour.Weekday => heatmap")
     assert command[Key.HUMAN_FORM] == "DF.COL1.COL2 => COMMAND"

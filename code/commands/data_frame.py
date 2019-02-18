@@ -53,4 +53,15 @@ class FilterCommand:
             else:
                 print("Skipping non-string")
 
+class XrowCommand:
+   def execute(self, commandData, context):
+        dataFrameName = commandData[Key.DATA_FRAME_NAME]
+        dataFrame = context.df_get(dataFrameName)
+        conditions = commandData[Key.PARAMETERS][0]
+        leq,req = conditions.split("=")
+        print("left {leq}, right {req}".format(leq=leq,req=req))
+        dataFrame = dataFrame[dataFrame[leq] != int(req)]
+        context.df_put(dataFrameName, dataFrame)
+        print("Now {numberRows} rows".format(numberRows=len(dataFrame)))
+
 

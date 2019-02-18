@@ -28,10 +28,12 @@ class Command:
     DROP_COLUMNS = "drop"
     # FilterCommand
     FILTER = "filter"
+    XROW = "xrow"
 
     # Graph Commands
     BAR_GRAPH = "bar"
     HEAT_MAP = "heatmap"
+    STACKED_LINE = "stacked"
 
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"

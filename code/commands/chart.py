@@ -27,6 +27,36 @@ class BarGraphCommand:
             chart.save(imageFileName, scale_factor=2.0)
             print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
 
+# import altair as alt
+# from vega_datasets import data
+
+# source = data.movies.url
+
+# alt.Chart(source).mark_bar().encode(
+#     alt.X("IMDB_Rating:Q", bin=True),
+#     y='count()',
+# )
+
+class StackedLineCommand:
+    def fieldName(self, s):
+        data = s.split(":")
+        if len(data) > 0:
+            return data[0]
+        else:
+            return s
+
+    def execute(self, commandData, context):
+        dataFrameName = commandData[Key.DATA_FRAME_NAME]
+        xDimension = commandData[Key.COLUMN_1]
+        yDimension = commandData[Key.COLUMN_2]
+        dataFrame = context.df_get(dataFrameName)
+        dfCleaned = dataFrame.dropna(subset = [self.fieldName(xDimension), self.fieldName(yDimension)])
+        chart = alt.Chart(dfCleaned).mark_area().encode(
+            x=xDimension,y="count()",color=yDimension)
+        imageFileName = context.dataFrameFileNames.df_stacked_image_fileName(dataFrameName, xDimension, yDimension)
+        chart.save(imageFileName)
+        print("Saved PNG stacked lines: {imageFileName}".format(imageFileName=imageFileName))
+
 class HeatMapCommand:
      def execute(self, commandData, context):
         dataFrameName = commandData[Key.DATA_FRAME_NAME]
