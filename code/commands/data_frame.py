@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import math
 from command import Key
 
@@ -59,8 +60,10 @@ class XrowCommand:
         dataFrame = context.df_get(dataFrameName)
         conditions = commandData[Key.PARAMETERS][0]
         leq,req = conditions.split("=")
-        print("left {leq}, right {req}".format(leq=leq,req=req))
-        dataFrame = dataFrame[dataFrame[leq] != int(req)]
+        if np.issubdtype(dataFrame[leq].dtype, np.integer):
+            dataFrame = dataFrame[dataFrame[leq] != int(req)]
+        else:
+            dataFrame = dataFrame[dataFrame[leq] != req]
         context.df_put(dataFrameName, dataFrame)
         print("Now {numberRows} rows".format(numberRows=len(dataFrame)))
 

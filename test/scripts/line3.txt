@@ -1,0 +1,6 @@
+all_areas = expected/all_areas.csv
+all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Date, Weekday, Hour
+all_areas.drop Victim Age, Victim Descent, Address, Cross Street
+all_areas.columns
+all_areas.xrow Year=2019
+all_areas.Year.Area Name => stacked
