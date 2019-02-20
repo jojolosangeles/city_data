@@ -69,18 +69,16 @@ class Command:
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"
     CAPTURED_BY_REGEX = "captured_by_regex" 
+
+    # show last image generated
+    SHOW_IMAGE = "image"
     # UnknownCommand
     UNKNOWN = "unknown" # text does not match any known pattern
 
-    def __init__(self, humanForm):
+    def __init__(self, humanForm, key):
         self.humanForm = humanForm
         self.regexForm, self.keys = RegexGenerator().getRegex(humanForm)
-        if Key.COMMAND in self.keys:
-            self.key = Command.CAPTURED_BY_REGEX
-        elif Key.COLUMN_NAME in self.keys:
-            self.key = Command.CREATE_COLUMN # df.col <= code -- doesn't specify command
-        else:
-            self.key = Command.LOAD  # df = file -- doesn't specify command     
+        self.key = key  
 
     def matches(self, line):
         self.matchData = re.match(self.regexForm, line)

@@ -1,8 +1,11 @@
 import sys
 import fileinput
+from PIL import Image
 from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
-from commands.data_frame import XrowCommand, LoadCommand, SaveCommand, FilterCommand, CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.data_frame import XrowCommand, LoadCommand, SaveCommand, FilterCommand 
+from commands.data_frame import CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
+from commands.data_frame import ShowImageCommand
 from commands.chart import BarGraphCommand, HeatMapCommand, StackedLineCommand
 
 class CommandLineParser:
@@ -10,12 +13,12 @@ class CommandLineParser:
         self.param_regex_most_to_least_specific = [
             # need to match in this order, from most specific to least specific
             # otherwise, the wrong command is identified
-            Command("DF.COL1.COL2 => COMMAND"),
-            Command("DF.COL.COMMAND PARAMS"),
-            Command("DF = FILE"),
-            Command("DF.COL <= CODE"),
-            Command("DF.COMMAND PARAMS"),
-            Command("DF.COMMAND")
+            Command("DF.COL1.COL2 => COMMAND", Command.CAPTURED_BY_REGEX),
+            Command("DF.COL.COMMAND PARAMS", Command.CAPTURED_BY_REGEX),
+            Command("DF = FILE", Command.LOAD),
+            Command("DF.COL <= CODE", Command.CREATE_COLUMN),
+            Command("DF.COMMAND PARAMS", Command.CAPTURED_BY_REGEX),
+            Command("DF.COMMAND", Command.CAPTURED_BY_REGEX)
         ]
 
     def identify_command(self, line):
@@ -23,12 +26,13 @@ class CommandLineParser:
         for command in self.param_regex_most_to_least_specific:
             if command.matches(line):
                 return command.asData()
-        return { "command": Command.UNKNOWN }
+        return { Key.COMMAND: Command.UNKNOWN }
 
 
 class Context:
     def __init__(self, dataFrameFileNames):
         self.dataFrames = {}
+        self.imageFiles = []
         self.dataFrameFileNames = dataFrameFileNames
 
     def df_get(self, dataFrameName):
@@ -42,10 +46,18 @@ class Context:
     def df_put(self, dataFrameName, dataFrame):
         self.dataFrames[dataFrameName] = dataFrame
 
+    def register_image(self, imageFileName):
+        self.imageFiles.append(imageFileName)
+
+    def show_image(self):
+        if len(self.imageFiles) > 0:
+            img = Image.open(self.imageFiles[-1])
+            img.show()
 
 class CommandExecutor:
     def __init__(self):
         self.commands = {
+            # DataFrame commands
             Command.LOAD: LoadCommand(),
             Command.SAVE: SaveCommand(),
             Command.CREATE_COLUMN: CreateColumnCommand(),
@@ -60,11 +72,12 @@ class CommandExecutor:
             Command.STACKED_LINE: StackedLineCommand(),
 
             # none of the above
+            Command.SHOW_IMAGE: ShowImageCommand(),
             Command.UNKNOWN: UnknownCommand()
         }
 
     def execute(self, commandData, context):
-        self.commands[commandData["command"]].execute(commandData, context)
+        self.commands[commandData[Key.COMMAND]].execute(commandData, context)
 
 class Repl:
     def __init__(self, interactive):

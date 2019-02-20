@@ -25,6 +25,7 @@ class BarGraphCommand:
             )
             imageFileName = context.dataFrameFileNames.df_image_fileName(name)
             chart.save(imageFileName, scale_factor=2.0)
+            context.register_image(imageFileName)
             print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
 
 # import altair as alt
@@ -55,6 +56,7 @@ class StackedLineCommand:
             x=xDimension,y="count()",color=yDimension)
         imageFileName = context.dataFrameFileNames.df_stacked_image_fileName(dataFrameName, xDimension, yDimension)
         chart.save(imageFileName)
+        context.register_image(imageFileName)
         print("Saved PNG stacked lines: {imageFileName}".format(imageFileName=imageFileName))
 
 class HeatMapCommand:
@@ -75,4 +77,5 @@ class HeatMapCommand:
         chart = alt.Chart(source).mark_rect().encode(x=xFormat,y=yFormat,color='z:Q')
         imageFileName = context.dataFrameFileNames.df_heatmap_image_fileName(dataFrameName, xDimension, yDimension)
         chart.save(imageFileName)
+        context.register_image(imageFileName)
         print("Saved PNG heatmap: {imageFileName}".format(imageFileName=imageFileName))
