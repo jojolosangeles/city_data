@@ -5,14 +5,45 @@ import re
 #
 class Key:
     HUMAN_FORM="humanForm"
-    COLUMN_1="column_1"
-    COLUMN_2="column_2"
-    DATA_FRAME_NAME="dataFrameName"
-    FILE_NAME="fileName"
-    COLUMN_NAME="columnName"
-    COMMAND="command"
-    CODE="code"
-    PARAMETERS="params"
+
+    COLUMN_1="COL1"
+    COLUMN_2="COL2"
+    DATA_FRAME_NAME="DF"
+    FILE_NAME="FILE"
+    COLUMN_NAME="COL"
+    COMMAND="COMMAND"
+    CODE="CODE"
+    PARAMETERS="PARAMS"
+
+class RegexGenerator:
+    COLUMN_REGEX = r"([ \w]+)"
+    NAME_REGEX = r"(\w+)"
+    ANY_TEXT_REGEX = r"([ -~]+)"
+    FILE_NAME_REGEX = r"([\w\.\\/]+)"
+    SPACE_REGEX = r"\s+"
+    DOT_REGEX = r"\."
+
+    def __init__(self):
+        self.rmap = {}
+        self.rmap[" "] = self.SPACE_REGEX
+        self.rmap["."] = self.DOT_REGEX
+        self.rmap[Key.DATA_FRAME_NAME] = self.NAME_REGEX
+        self.rmap[Key.COLUMN_1] = self.COLUMN_REGEX
+        self.rmap[Key.COLUMN_2] = self.COLUMN_REGEX
+        self.rmap[Key.COLUMN_NAME] = self.COLUMN_REGEX
+        self.rmap[Key.COMMAND] = self.NAME_REGEX
+        self.rmap[Key.CODE] = self.ANY_TEXT_REGEX
+        self.rmap[Key.PARAMETERS] = self.ANY_TEXT_REGEX
+        self.rmap[Key.FILE_NAME] = self.FILE_NAME_REGEX
+    
+    def getRegex(self, s):
+        parameters = []
+        for key in self.rmap:
+            if s.find(key) >= 0:
+                s = s.replace(key, self.rmap[key])
+                if len(key) > 1:
+                    parameters.append(key)
+        return s, parameters
 
 
 class Command:
@@ -41,17 +72,22 @@ class Command:
     # UnknownCommand
     UNKNOWN = "unknown" # text does not match any known pattern
 
-    def __init__(self, humanForm, regexForm, key, *args):
+    def __init__(self, humanForm):
         self.humanForm = humanForm
-        self.regexForm = regexForm
-        self.key = key
-        self.keys = args
+        self.regexForm, self.keys = RegexGenerator().getRegex(humanForm)
+        if Key.COMMAND in self.keys:
+            self.key = Command.CAPTURED_BY_REGEX
+        elif Key.COLUMN_NAME in self.keys:
+            self.key = Command.CREATE_COLUMN # df.col <= code -- doesn't specify command
+        else:
+            self.key = Command.LOAD  # df = file -- doesn't specify command     
 
     def matches(self, line):
         self.matchData = re.match(self.regexForm, line)
         return self.matchData
 
     def asData(self):
+        #
         # Key/value data representing the command
         #
         # humanForm -- to find it in code

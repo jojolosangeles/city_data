@@ -1,1 +1,1 @@
-py.test -s -k test_x
+py.test -s -k test_B1

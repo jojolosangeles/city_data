@@ -10,20 +10,12 @@ class CommandLineParser:
         self.param_regex_most_to_least_specific = [
             # need to match in this order, from most specific to least specific
             # otherwise, the wrong command is identified
-            #
-            # DF maps to "dataFrameName" (Key.DATA_FRAME_NAME)
-            # COL maps to "columnName" (Key.COLUMN_NAME)
-            # COL1, COL2 map to "column_1", "column_2" (Key.COLUMN_1, Key.COLUMN_2)
-            # COMMAND maps to the Python class that executes the command
-            # CODE free form python code that generates all values for a new DataFrame column
-            # PARAMS list of free form text names (with spaces allowed), separated by commas
-            #
-            Command("DF.COL1.COL2 => COMMAND", "(\w+)\.([ \w]+)\.([ \w]+)\s+=>\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_1, Key.COLUMN_2, Key.COMMAND),
-            Command("DF.COL.COMMAND PARAMS", "(\w+)\.([ \w]+)\.(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.COMMAND, Key.PARAMETERS),
-            Command("DF=FILE", "(\w+)\s*=\s*([\w\.\\\/]+)", Command.LOAD, Key.DATA_FRAME_NAME, Key.FILE_NAME),
-            Command("DF.COL<=CODE", "(\w+)\.(\w+)\s*<=\s*([ -~]+)", Command.CREATE_COLUMN, Key.DATA_FRAME_NAME, Key.COLUMN_NAME, Key.CODE),
-            Command("DF.COMMAND PARAMS", "(\w+).(\w+)\s+([ -~]+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND, Key.PARAMETERS),
-            Command("DF.COMMAND", "(\w+).(\w+)", Command.CAPTURED_BY_REGEX, Key.DATA_FRAME_NAME, Key.COMMAND)
+            Command("DF.COL1.COL2 => COMMAND"),
+            Command("DF.COL.COMMAND PARAMS"),
+            Command("DF = FILE"),
+            Command("DF.COL <= CODE"),
+            Command("DF.COMMAND PARAMS"),
+            Command("DF.COMMAND")
         ]
 
     def identify_command(self, line):
