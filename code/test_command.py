@@ -6,7 +6,7 @@ def rxp():
     return RegexGenerator()
 
 def test_Command_1():
-    command = Command("DF.COL1.COL2 => COMMAND")
+    command = Command("DF.COL1.COL2 => COMMAND", Command.CAPTURED_BY_REGEX)
     regex = r"(\w+)\.([ \w]+)\.([ \w]+)\s+=>\s+(\w+)"
     assert regex == command.regexForm
     assert len(command.keys) == 4
@@ -16,7 +16,7 @@ def test_Command_1():
     assert command.keys[3] == Key.COMMAND
 
 def test_Command_2():
-    command = Command("DF.COL.COMMAND PARAMS")
+    command = Command("DF.COL.COMMAND PARAMS", Command.CAPTURED_BY_REGEX)
     regex = r"(\w+)\.([ \w]+)\.(\w+)\s+([ -~]+)"
     assert regex == command.regexForm
     assert len(command.keys) == 4

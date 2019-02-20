@@ -37,6 +37,10 @@ class ShowColumnsCommand:
         dataFrame = context.df_get(commandData[Key.DATA_FRAME_NAME])
         print(dataFrame.columns.values)
 
+class ShowImageCommand:
+    def execute(self, commandData, context):
+        context.show_image()
+
 class FilterCommand:
    def execute(self, commandData, context):
         dataFrameName = commandData[Key.DATA_FRAME_NAME]
