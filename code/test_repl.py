@@ -83,3 +83,8 @@ def test_D1(clp):
     command = clp.identify_command("  some_df.some_command      ")
     assert command[Key.COMMAND] == "some_command"
     assert command[Key.DATA_FRAME_NAME] == "some_df"
+
+def test_analyze(clp):
+    command = clp.identify_command("sample.analyze")
+    assert command[Key.COMMAND] == "analyze"
+    assert command[Key.DATA_FRAME_NAME] == "sample"

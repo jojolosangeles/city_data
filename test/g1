@@ -1,0 +1,4 @@
+set -x
+rm actual/graphit.*
+python ../code/main.py scripts/graphit.txt > actual/graphit.out
+diff expected/graphit.out actual/graphit.out

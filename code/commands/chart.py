@@ -2,6 +2,20 @@ import altair as alt
 import pandas as pd
 from command import Key
 
+class GraphCommand:
+    def execute(self, commandData, context):
+        dataFrameName = commandData[Key.DATA_FRAME_NAME]
+        columns = commandData[Key.PARAMETERS]
+        columnMetadata = {}
+        for columnName in columns:
+            print("AAAA")
+            print(columnName)
+            columnMetadata[columnName] = context.df_column_metadata(dataFrameName, columnName)
+            print("BBBB")
+            print(columnMetadata[columnName])
+            print("CCCC")
+
+
 class BarGraphCommand:
      def execute(self, commandData, context):
         dataFrameName = commandData[Key.DATA_FRAME_NAME]
@@ -27,16 +41,6 @@ class BarGraphCommand:
             chart.save(imageFileName, scale_factor=2.0)
             context.register_image(imageFileName)
             print("Saved Bar Graph PNG '{imageFileName}'".format(imageFileName=imageFileName))
-
-# import altair as alt
-# from vega_datasets import data
-
-# source = data.movies.url
-
-# alt.Chart(source).mark_bar().encode(
-#     alt.X("IMDB_Rating:Q", bin=True),
-#     y='count()',
-# )
 
 class StackedLineCommand:
     def fieldName(self, s):

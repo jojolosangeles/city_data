@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import math
 from command import Key
+from commands.altair_types import AltairTypes
 
 class LoadCommand:
     def execute(self, commandData, context):
@@ -15,6 +16,16 @@ class SaveCommand:
         fileName = context.dataFrameFileNames.df_fileName(dataFrameName)
         dataFrame.to_csv(fileName)
         print("Saved CSV File '{fileName}'".format(fileName=fileName))
+
+class AnalyzeDF:
+    def execute(self, commandData, context):
+        dataFrameName = commandData[Key.DATA_FRAME_NAME]
+        dataFrame = context.df_get(dataFrameName)
+        for col in dataFrame.columns:
+            sample = dataFrame.sample(frac=0.05)
+            at = AltairTypes()
+            types = at.identify_QONT(sample[col])
+            print(types)
 
 class CreateColumnCommand:
     def execute(self, commandData, context):
@@ -39,7 +50,13 @@ class ShowColumnsCommand:
 
 class ShowImageCommand:
     def execute(self, commandData, context):
-        context.show_image()
+        n = 1
+        if Key.PARAMETERS in commandData:
+            n = int(commandData[Key.PARAMETERS][0])
+        print(commandData)
+        print(n)
+        print(commandData[Key.PARAMETERS])
+        context.show_image(n)
 
 class FilterCommand:
    def execute(self, commandData, context):

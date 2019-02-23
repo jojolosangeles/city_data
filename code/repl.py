@@ -5,8 +5,9 @@ from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
 from commands.data_frame import XrowCommand, LoadCommand, SaveCommand, FilterCommand 
 from commands.data_frame import CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
-from commands.data_frame import ShowImageCommand
-from commands.chart import BarGraphCommand, HeatMapCommand, StackedLineCommand
+from commands.data_frame import ShowImageCommand, AnalyzeDF
+from commands.chart import BarGraphCommand, HeatMapCommand, StackedLineCommand, GraphCommand
+from commands.altair_types import AltairTypes
 
 class CommandLineParser:
     def __init__(self):
@@ -32,11 +33,37 @@ class CommandLineParser:
 class Context:
     def __init__(self, dataFrameFileNames):
         self.dataFrames = {}
+        self.dataFrameColumnMetadata = {}
         self.imageFiles = []
         self.dataFrameFileNames = dataFrameFileNames
+        self.altairTypes = AltairTypes()
 
     def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
+
+    def df_column_metadata(self, dataFrameName, columnName):
+        name = "{dataFrameName}.{columnName}".format(dataFrameName=dataFrameName, columnName=columnName)
+        dataFrame = self.df_get(dataFrameName)
+        sample = dataFrame.sample(frac=0.05)[columnName]
+        sample = [str(val) for val in sample]
+        basicTypes = self.altairTypes.identify_QONT(sample)
+        nunique = dataFrame[columnName].nunique()
+        clean99 = []
+        boundary = len(sample)/100
+        if nunique < 10:
+            unique = dataFrame[columnName].unique()
+            for val in unique:
+                count = len(dataFrame[dataFrame[columnName] == val])
+                if count > boundary:
+                    clean99.append(val)
+
+        print(name)
+        self.dataFrameColumnMetadata[name] = { 
+            "types": basicTypes,
+            "numberUniqueValues": nunique,
+            "clean99": clean99
+        }
+        print(self.dataFrameColumnMetadata[name])
 
     def df_slice_names(self, dataFrameName, columnName):
         dataFrame = self.df_get(dataFrameName)
@@ -49,16 +76,18 @@ class Context:
     def register_image(self, imageFileName):
         self.imageFiles.append(imageFileName)
 
-    def show_image(self):
-        if len(self.imageFiles) > 0:
-            img = Image.open(self.imageFiles[-1])
-            img.show()
+    def show_image(self, n):
+        if len(self.imageFiles) >= n:
+            for _ in range(1, n):
+                img = Image.open(self.imageFiles[-n])
+                img.show()
 
 class CommandExecutor:
     def __init__(self):
         self.commands = {
             # DataFrame commands
             Command.LOAD: LoadCommand(),
+            Command.ANALYZE: AnalyzeDF(),
             Command.SAVE: SaveCommand(),
             Command.CREATE_COLUMN: CreateColumnCommand(),
             Command.DROP_COLUMNS: DropColumnsCommand(),
@@ -70,6 +99,7 @@ class CommandExecutor:
             Command.BAR_GRAPH: BarGraphCommand(),
             Command.HEAT_MAP: HeatMapCommand(),
             Command.STACKED_LINE: StackedLineCommand(),
+            Command.GRAPH: GraphCommand(),
 
             # none of the above
             Command.SHOW_IMAGE: ShowImageCommand(),

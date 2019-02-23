@@ -51,6 +51,7 @@ class Command:
     # LoadCommand, SaveCommand
     LOAD = "load"
     SAVE = "save"
+    ANALYZE = "analyze"
     # CreateColumnCommand
     CREATE_COLUMN = "create"
     # ShowColumnsCommand
@@ -65,6 +66,9 @@ class Command:
     BAR_GRAPH = "bar"
     HEAT_MAP = "heatmap"
     STACKED_LINE = "stacked"
+
+    # this one generates a 'reasonable' set based on dimensions selected
+    GRAPH = "graph"
 
     ### These are just tags, there is no associated action
     # key is extracted from the text line provided to "matches"
