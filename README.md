@@ -146,6 +146,17 @@ The "Date" column is an actual Date datatype, the "Weekday" becomes a value 0
 through 6, where Monday is 0 and Sunday is 6, and "Year" becomes a numeric
 value.
 
+##### DataFrame: Process existing columns to create new column
+Location in collision data is in fields "(latitude, longitude)" -- get individual
+latitude and longitude columns:
+
+```
+dataFrame = ../data/real/Traffic_Collision_Data_from_2010_to_Present.csv
+dataFrame.latitude <= [eval(x)[0] for x in dataFrame['Location']]
+dataFrame.longitude <= [eval(x)[1] for x in dataFrame['Location']]
+dataFrame.save
+```
+
 ##### DataFrame: Remove a column
 
 One or more columns can be dropped.

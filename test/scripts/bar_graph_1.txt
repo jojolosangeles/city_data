@@ -10,9 +10,9 @@ bar_graph_1.drop Crime Code, Crime Code Description, MO Codes, Premise Code
 bar_graph_1.drop Premise Description, Location
 
 # Create some new columns
-bar_graph_1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-bar_graph_1.Weekday <= [x.weekday() for x in dataFrame['Date']]
-bar_graph_1.Year <= [x.year for x in dataFrame['Date']]
+bar_graph_1.Date <= [pd.to_datetime(x) for x in bar_graph_1['Date Occurred']]
+bar_graph_1.Weekday <= [x.weekday() for x in bar_graph_1['Date']]
+bar_graph_1.Year <= [x.year for x in bar_graph_1['Date']]
 
 # Show the current state of the columns (to verify changes)
 bar_graph_1.columns

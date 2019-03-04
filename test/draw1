@@ -1,2 +1,0 @@
-python ../code/main.py scripts/draw_area_graphs.txt > actual/draw_area_graphs.out
-diff expected/draw_area_graphs.out actual

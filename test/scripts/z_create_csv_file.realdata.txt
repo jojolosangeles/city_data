@@ -9,10 +9,10 @@ all_areas.drop DR Number, Date Reported, Area ID, Reporting District, Crime Code
 all_areas.drop Crime Code Description, MO Codes, Premise Code, Premise Description, Location
 
 # Create columns for grouping
-all_areas.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-all_areas.Weekday <= [x.weekday() for x in dataFrame['Date']]
-all_areas.Year  <= [x.year for x in dataFrame['Date']]
-all_areas.Hour <= [math.floor(x/100) for x in dataFrame['Time Occurred']]
+all_areas.Date <= [pd.to_datetime(x) for x in all_areas['Date Occurred']]
+all_areas.Weekday <= [x.weekday() for x in all_areas['Date']]
+all_areas.Year  <= [x.year for x in all_areas['Date']]
+all_areas.Hour <= [math.floor(x/100) for x in all_areas['Time Occurred']]
 
 # Save DataFrame "all_areas" to CSV file "all_areas.csv"
 all_areas.save

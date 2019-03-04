@@ -54,7 +54,5 @@ class AltairTypes:
                  1 if self.temporal.match(value) else 0,
                  1 if self.variable.match(value) else 0
                 )))
-        print(values)
-        print(result)
         return result
 

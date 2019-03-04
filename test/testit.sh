@@ -1,72 +1,16 @@
 set -x
 if [ ! -f "actual/bar_graph_1.out" ]; then
-  python ../code/main.py scripts/bar_graph_1.txt > actual/bar_graph_1.out
-  diff expected/bar_graph_1.out actual
-  diff expected/bar_graph_1.csv actual
-  diff -b expected/bar_graph_1.png actual
+  ./bar_graph_1
 fi
 if [ ! -f "actual/create_column.out" ]; then
-  python ../code/main.py scripts/create_column.txt > actual/create_column.out
-  diff expected/create_column.out actual/create_column.out
+  ./create_column
 fi
 if [ ! -f "actual/draw_area_graphs.out" ]; then
-  python ../code/main.py scripts/draw_area_graphs.txt > actual/draw_area_graphs.out
-  diff expected/draw_area_graphs.out actual/draw_area_graphs.out
-  diff expected/all_areas.Area_Name.77th_Street.csv actual
-  diff expected/all_areas.Area_Name.Central.csv actual
-  diff expected/all_areas.Area_Name.Devonshire.csv actual
-  diff expected/all_areas.Area_Name.Foothill.csv actual
-  diff expected/all_areas.Area_Name.Harbor.csv actual
-  diff expected/all_areas.Area_Name.Hollenbeck.csv actual
-  diff expected/all_areas.Area_Name.Hollywood.csv actual
-  diff expected/all_areas.Area_Name.Mission.csv actual
-  diff expected/all_areas.Area_Name.N_Hollywood.csv actual
-  diff expected/all_areas.Area_Name.Newton.csv actual
-  diff expected/all_areas.Area_Name.Northeast.csv actual
-  diff expected/all_areas.Area_Name.Olympic.csv actual
-  diff expected/all_areas.Area_Name.Pacific.csv actual
-  diff expected/all_areas.Area_Name.Rampart.csv actual
-  diff expected/all_areas.Area_Name.Southeast.csv actual
-  diff expected/all_areas.Area_Name.Southwest.csv actual
-  diff expected/all_areas.Area_Name.Topanga.csv actual
-  diff expected/all_areas.Area_Name.Van_Nuys.csv actual
-  diff expected/all_areas.Area_Name.West_LA.csv actual
-  diff expected/all_areas.Area_Name.West_Valley.csv actual
-  diff expected/all_areas.Area_Name.Wilshire.csv actual
-  diff expected/all_areas.Victim_Sex.F.csv actual
-  diff expected/all_areas.Victim_Sex.H.csv actual
-  diff expected/all_areas.Victim_Sex.M.csv actual
-  diff expected/all_areas.Victim_Sex.N.csv actual
-  diff expected/all_areas.Victim_Sex.X.csv actual
-
-  diff -b expected/all_areas.Area_Name.77th_Street.png actual
-  diff -b expected/all_areas.Area_Name.Central.png actual
-  diff -b expected/all_areas.Area_Name.Devonshire.png actual
-  diff -b expected/all_areas.Area_Name.Foothill.png actual
-  diff -b expected/all_areas.Area_Name.Harbor.png actual
-  diff -b expected/all_areas.Area_Name.Hollenbeck.png actual
-  diff -b expected/all_areas.Area_Name.Hollywood.png actual
-  diff -b expected/all_areas.Area_Name.Mission.png actual
-  diff -b expected/all_areas.Area_Name.N_Hollywood.png actual
-  diff -b expected/all_areas.Area_Name.Newton.png actual
-  diff -b expected/all_areas.Area_Name.Northeast.png actual
-  diff -b expected/all_areas.Area_Name.Olympic.png actual
-  diff -b expected/all_areas.Area_Name.Pacific.png actual
-  diff -b expected/all_areas.Area_Name.Rampart.png actual
-  diff -b expected/all_areas.Area_Name.Southeast.png actual
-  diff -b expected/all_areas.Area_Name.Southwest.png actual
-  diff -b expected/all_areas.Area_Name.Topanga.png actual
-  diff -b expected/all_areas.Area_Name.Van_Nuys.png actual
-  diff -b expected/all_areas.Area_Name.West_LA.png actual
-  diff -b expected/all_areas.Area_Name.West_Valley.png actual
-  diff -b expected/all_areas.Area_Name.Wilshire.png actual
+  ./draw_area_graphs
 fi
-
 if [ ! -f "actual/drop_columns.out" ]; then
-  python ../code/main.py scripts/drop_columns.txt > actual/drop_columns.out
-  diff expected/drop_columns.out actual/drop_columns.out
+  ./drop_columns
 fi
-
 if [ ! -f "actual/heat.out" ]; then
   python ../code/main.py scripts/heat.txt > actual/heat.out
   diff expected/heat.out actual/heat.out

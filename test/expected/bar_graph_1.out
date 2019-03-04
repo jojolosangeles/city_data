@@ -1,7 +1,7 @@
 Test: scripts/bar_graph_1.txt
 > # Load collision data into "bar_graph_1" DataFrame
 > bar_graph_1 = data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv
-Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame bar_graph_1
+Loaded data/sample_20_Traffic_Collision_Data_from_2010_to_Present.csv into DataFrame 'bar_graph_1'
 > 
 > # Display the columns loaded (to verify the load was successful)
 > bar_graph_1.columns
@@ -19,9 +19,9 @@ Dropped ['Crime Code', 'Crime Code Description', 'MO Codes', 'Premise Code'] fro
 Dropped ['Premise Description', 'Location'] from DataFrame 'bar_graph_1'
 > 
 > # Create some new columns
-> bar_graph_1.Date <= [pd.to_datetime(x) for x in dataFrame['Date Occurred']]
-> bar_graph_1.Weekday <= [x.weekday() for x in dataFrame['Date']]
-> bar_graph_1.Year <= [x.year for x in dataFrame['Date']]
+> bar_graph_1.Date <= [pd.to_datetime(x) for x in bar_graph_1['Date Occurred']]
+> bar_graph_1.Weekday <= [x.weekday() for x in bar_graph_1['Date']]
+> bar_graph_1.Year <= [x.year for x in bar_graph_1['Date']]
 > 
 > # Show the current state of the columns (to verify changes)
 > bar_graph_1.columns
@@ -30,10 +30,10 @@ Dropped ['Premise Description', 'Location'] from DataFrame 'bar_graph_1'
 > 
 > # Save the DataFrame "bar_graph_1" into a CSV file "bar_graph_1.csv"
 > bar_graph_1.save
-Saved CSV File 'actual/bar_graph_1.csv'
+Saved CSV File './actual/bar_graph_1.csv'
 > 
 > # Draw a bar graph using "Year" for X axis, and "Number of Accidents" for Y axis
 > # Notation for axes is passed to
 > bar_graph_1.bar X|Year:O|Year,Y|count()|Number of Accidents
 Making bar chart for DataFrame bar_graph_1
-Saved Bar Graph PNG 'actual/bar_graph_1.png'
+Saved Bar Graph PNG './actual/bar_graph_1.png'

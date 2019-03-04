@@ -1,0 +1,3 @@
+set -x
+python ../code/main.py scripts/drop_columns.txt > actual/drop_columns.out
+diff expected/drop_columns.out actual/drop_columns.out

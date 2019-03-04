@@ -1,5 +1,5 @@
 all_areas = expected/all_areas.csv
-all_areas.Age <= [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in dataFrame['Victim Age']]
+all_areas.Age <= [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in all_areas['Victim Age']]
 all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Area Name, Date, Weekday, Hour
 all_areas.drop Victim Age, Victim Sex, Victim Descent, Address, Cross Street
 all_areas.columns

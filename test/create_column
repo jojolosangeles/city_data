@@ -1,0 +1,4 @@
+set -x
+python ../code/main.py scripts/create_column.txt > actual/create_column.out
+diff expected/create_column.out actual/create_column.out
+diff expected/sample20.csv actual/sample20.csv

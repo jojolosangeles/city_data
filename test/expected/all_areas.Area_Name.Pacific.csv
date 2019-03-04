@@ -1,4 +1,4 @@
-,Unnamed: 0,Date Occurred,Time Occurred,Area Name,Victim Age,Victim Sex,Victim Descent,Address,Cross Street,Date,Weekday,Year,Hour
+key,Unnamed: 0,Date Occurred,Time Occurred,Area Name,Victim Age,Victim Sex,Victim Descent,Address,Cross Street,Date,Weekday,Year,Hour
 2,2,06/09/2010,1925,Pacific,40.0,F,B,MANCHESTER                   BL,BELLANCA                     AV,2010-06-09,2,2010,19
 45,45,11/01/2010,1240,Pacific,,M,W,SEPULVEDA                    BL,VENICE                       BL,2010-11-01,0,2010,12
 75,75,06/12/2010,2030,Pacific,44.0,F,O,VISTA DEL MAR                AV,IMPERIAL                     HY,2010-06-12,5,2010,20

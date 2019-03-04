@@ -1,20 +1,20 @@
-,Date Occurred,Time Occurred,Area Name,Victim Age,Victim Sex,Victim Descent,Address,Cross Street
-0,11/04/2010,1345,Central,20.0,F,H,7TH                          ST,LAWRENCE                     ST
-1,08/10/2010,1900,77th Street,31.0,F,B,54TH                         ST,3RD                          AV
-2,06/09/2010,1925,Pacific,40.0,F,B,MANCHESTER                   BL,BELLANCA                     AV
-3,04/06/2010,1445,Topanga,51.0,M,O,ROSITA                       AV,CORBIN                       AV
-4,05/23/2010,1805,Southwest,32.0,F,H,43RD                         PL,WALTON                       AV
-5,09/02/2010,1520,Foothill,45.0,F,W,9600    SUNLAND                      BL,
-6,10/27/2010,1910,77th Street,61.0,F,B,CRENSHAW                     BL,74TH                         ST
-7,09/30/2010,540,77th Street,70.0,M,B,NORMANDIE                    AV,MANCHESTER                   AV
-8,11/19/2010,1440,77th Street,,M,O,54TH                         ST,NORMANDIE                    AV
-9,02/21/2010,300,Newton,44.0,F,O,100 W  52ND                         ST,
-10,09/01/2010,1530,Hollywood,,M,H,FERN DELL                    DR,RED OAK                      DR
-11,03/11/2010,1840,77th Street,55.0,F,B,VAN NESS                     AV,GAGE                         AV
-12,03/23/2010,1400,N Hollywood,45.0,M,W,TUJUNGA                      AV,MOORPARK                     ST
-13,06/28/2010,210,Topanga,,M,X,LEDERER,N  VICTORY
-14,04/17/2010,1130,Northeast,29.0,F,H,ALDAMA,AVENUE 52
-15,03/17/2010,1600,Hollenbeck,,M,H,BOYLE                        AV,5TH                          ST
-16,07/25/2010,600,Hollenbeck,41.0,M,O,7TH                          ST,GOLDEN STATE                 FY
-17,10/27/2010,1020,West LA,53.0,F,W,OAKHURST                     DR,PICO                         BL
-18,02/03/2010,1520,Central,20.0,M,O,4TH                          ST,SPRING                       ST
+,DR Number,Date Reported,Date Occurred,Time Occurred,Area ID,Area Name,Reporting District,Crime Code,Crime Code Description,MO Codes,Victim Age,Victim Sex,Victim Descent,Premise Code,Premise Description,Address,Cross Street,Location,latitude,longitude
+0,100119684,01/01/11042010,11/04/2010,1345,1,Central,159,997,TRAFFIC COLLISION,,20.0,F,H,101,STREET,7TH                          ST,LAWRENCE                     ST,"(34.0348, -118.2362)",34.0348,-118.2362
+1,101221255,01/01/8102010,08/10/2010,1900,12,77th Street,1211,997,TRAFFIC COLLISION,,31.0,F,B,101,STREET,54TH                         ST,3RD                          AV,"(33.9932, -118.3203)",33.9932,-118.3203
+2,101414426,01/01/6112010,06/09/2010,1925,14,Pacific,1488,997,TRAFFIC COLLISION,,40.0,F,B,101,STREET,MANCHESTER                   BL,BELLANCA                     AV,"(33.9599, -118.3805)",33.9599,-118.3805
+3,102109168,01/01/4062010,04/06/2010,1445,21,Topanga,2197,997,TRAFFIC COLLISION,1501,51.0,M,O,101,STREET,ROSITA                       AV,CORBIN                       AV,"(34.1585, -118.5633)",34.1585,-118.5633
+4,100322445,01/01/9222010,05/23/2010,1805,3,Southwest,397,997,TRAFFIC COLLISION,,32.0,F,H,101,STREET,43RD                         PL,WALTON                       AV,"(34.0055, -118.2948)",34.0055,-118.2948
+5,101616651,01/01/9022010,09/02/2010,1520,16,Foothill,1667,997,TRAFFIC COLLISION,0605,45.0,F,W,101,STREET,9600    SUNLAND                      BL,,"(34.246, -118.3622)",34.246,-118.3622
+6,101226806,01/01/10282010,10/27/2010,1910,12,77th Street,1251,997,TRAFFIC COLLISION,,61.0,F,B,101,STREET,CRENSHAW                     BL,74TH                         ST,"(33.9727, -118.3309)",33.9727,-118.3309
+7,101224882,01/01/9302010,09/30/2010,540,12,77th Street,1265,997,TRAFFIC COLLISION,,70.0,M,B,101,STREET,NORMANDIE                    AV,MANCHESTER                   AV,"(33.96, -118.3003)",33.96,-118.3003
+8,111206659,01/01/2082011,11/19/2010,1440,12,77th Street,1215,997,TRAFFIC COLLISION,,,M,O,101,STREET,54TH                         ST,NORMANDIE                    AV,"(33.9932, -118.3002)",33.9932,-118.3002
+9,101307375,01/01/2212010,02/21/2011,300,13,Newton,1361,997,TRAFFIC COLLISION,0605,44.0,F,O,101,STREET,100 W  52ND                         ST,,"(33.9956, -118.274)",33.9956,-118.274
+10,100621779,01/01/9012010,09/01/2011,1530,6,Hollywood,629,997,TRAFFIC COLLISION,,,M,H,101,STREET,FERN DELL                    DR,RED OAK                      DR,"(34.1127, -118.3075)",34.1127,-118.3075
+11,101209393,01/01/3112010,03/11/2011,1840,12,77th Street,1243,997,TRAFFIC COLLISION,,55.0,F,B,101,STREET,VAN NESS                     AV,GAGE                         AV,"(33.9818, -118.3177)",33.9818,-118.3177
+12,101508936,01/01/3232010,03/23/2012,1400,15,N Hollywood,1563,997,TRAFFIC COLLISION,,45.0,M,W,101,STREET,TUJUNGA                      AV,MOORPARK                     ST,"(34.1504, -118.379)",34.1504,-118.379
+13,102113467,01/01/6282010,06/28/2012,210,21,Topanga,2142,997,TRAFFIC COLLISION,1501,,M,X,101,STREET,LEDERER,N  VICTORY,"(34.1875, -118.6391)",34.1875,-118.6391
+14,101110529,01/01/4172010,04/17/2012,1130,11,Northeast,1137,997,TRAFFIC COLLISION,,29.0,F,H,101,STREET,ALDAMA,AVENUE 52,"(34.1131, -118.203)",34.1131,-118.203
+15,100407375,01/01/3172010,03/17/2012,1600,4,Hollenbeck,462,997,TRAFFIC COLLISION,0605 1300,,M,H,101,STREET,BOYLE                        AV,5TH                          ST,"(34.0415, -118.2196)",34.0415,-118.2196
+16,100412989,01/01/7252010,07/25/2012,600,4,Hollenbeck,462,997,TRAFFIC COLLISION,,41.0,M,O,101,STREET,7TH                          ST,GOLDEN STATE                 FY,"(34.0386, -118.2201)",34.0386,-118.2201
+17,100817261,01/01/10282010,10/27/2010,1020,8,West LA,857,997,TRAFFIC COLLISION,,53.0,F,W,101,STREET,OAKHURST                     DR,PICO                         BL,"(34.0553, -118.3907)",34.0553,-118.3907
+18,100105777,01/01/2032010,02/03/2010,1520,1,Central,135,997,TRAFFIC COLLISION,,20.0,M,O,101,STREET,4TH                          ST,SPRING                       ST,"(34.0488, -118.2483)",34.0488,-118.2483

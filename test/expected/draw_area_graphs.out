@@ -1,6 +1,6 @@
 Test: scripts/draw_area_graphs.txt
 > all_areas = expected/all_areas.csv
-Loaded expected/all_areas.csv into DataFrame all_areas
+Loaded expected/all_areas.csv into DataFrame 'all_areas'
 > all_areas.filter Area Name
 Created DataFrame all_areas.Area_Name.Central, saved CSV
 Created DataFrame all_areas.Area_Name.77th_Street, saved CSV
@@ -25,47 +25,47 @@ Created DataFrame all_areas.Area_Name.West_Valley, saved CSV
 Created DataFrame all_areas.Area_Name.Van_Nuys, saved CSV
 > all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents
 Making bar chart for DataFrame all_areas.Area_Name.Central
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Central.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Central.png'
 Making bar chart for DataFrame all_areas.Area_Name.77th_Street
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.77th_Street.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.77th_Street.png'
 Making bar chart for DataFrame all_areas.Area_Name.Pacific
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Pacific.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Pacific.png'
 Making bar chart for DataFrame all_areas.Area_Name.Topanga
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Topanga.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Topanga.png'
 Making bar chart for DataFrame all_areas.Area_Name.Southwest
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Southwest.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Southwest.png'
 Making bar chart for DataFrame all_areas.Area_Name.Foothill
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Foothill.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Foothill.png'
 Making bar chart for DataFrame all_areas.Area_Name.Newton
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Newton.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Newton.png'
 Making bar chart for DataFrame all_areas.Area_Name.Hollywood
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Hollywood.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Hollywood.png'
 Making bar chart for DataFrame all_areas.Area_Name.N_Hollywood
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.N_Hollywood.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.N_Hollywood.png'
 Making bar chart for DataFrame all_areas.Area_Name.Northeast
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Northeast.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Northeast.png'
 Making bar chart for DataFrame all_areas.Area_Name.Hollenbeck
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Hollenbeck.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Hollenbeck.png'
 Making bar chart for DataFrame all_areas.Area_Name.West_LA
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.West_LA.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.West_LA.png'
 Making bar chart for DataFrame all_areas.Area_Name.Southeast
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Southeast.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Southeast.png'
 Making bar chart for DataFrame all_areas.Area_Name.Devonshire
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Devonshire.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Devonshire.png'
 Making bar chart for DataFrame all_areas.Area_Name.Mission
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Mission.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Mission.png'
 Making bar chart for DataFrame all_areas.Area_Name.Harbor
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Harbor.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Harbor.png'
 Making bar chart for DataFrame all_areas.Area_Name.Wilshire
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Wilshire.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Wilshire.png'
 Making bar chart for DataFrame all_areas.Area_Name.Rampart
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Rampart.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Rampart.png'
 Making bar chart for DataFrame all_areas.Area_Name.Olympic
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Olympic.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Olympic.png'
 Making bar chart for DataFrame all_areas.Area_Name.West_Valley
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.West_Valley.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.West_Valley.png'
 Making bar chart for DataFrame all_areas.Area_Name.Van_Nuys
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Van_Nuys.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Van_Nuys.png'
 > all_areas.filter Victim Sex
 Created DataFrame all_areas.Victim_Sex.F, saved CSV
 Created DataFrame all_areas.Victim_Sex.M, saved CSV
@@ -75,47 +75,47 @@ Created DataFrame all_areas.Victim_Sex.X, saved CSV
 Created DataFrame all_areas.Victim_Sex.N, saved CSV
 > all_areas.Area Name.bar X|Year:O|Year, Y|count()|Number of Accidents
 Making bar chart for DataFrame all_areas.Area_Name.Central
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Central.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Central.png'
 Making bar chart for DataFrame all_areas.Area_Name.77th_Street
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.77th_Street.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.77th_Street.png'
 Making bar chart for DataFrame all_areas.Area_Name.Pacific
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Pacific.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Pacific.png'
 Making bar chart for DataFrame all_areas.Area_Name.Topanga
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Topanga.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Topanga.png'
 Making bar chart for DataFrame all_areas.Area_Name.Southwest
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Southwest.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Southwest.png'
 Making bar chart for DataFrame all_areas.Area_Name.Foothill
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Foothill.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Foothill.png'
 Making bar chart for DataFrame all_areas.Area_Name.Newton
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Newton.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Newton.png'
 Making bar chart for DataFrame all_areas.Area_Name.Hollywood
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Hollywood.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Hollywood.png'
 Making bar chart for DataFrame all_areas.Area_Name.N_Hollywood
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.N_Hollywood.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.N_Hollywood.png'
 Making bar chart for DataFrame all_areas.Area_Name.Northeast
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Northeast.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Northeast.png'
 Making bar chart for DataFrame all_areas.Area_Name.Hollenbeck
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Hollenbeck.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Hollenbeck.png'
 Making bar chart for DataFrame all_areas.Area_Name.West_LA
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.West_LA.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.West_LA.png'
 Making bar chart for DataFrame all_areas.Area_Name.Southeast
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Southeast.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Southeast.png'
 Making bar chart for DataFrame all_areas.Area_Name.Devonshire
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Devonshire.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Devonshire.png'
 Making bar chart for DataFrame all_areas.Area_Name.Mission
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Mission.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Mission.png'
 Making bar chart for DataFrame all_areas.Area_Name.Harbor
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Harbor.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Harbor.png'
 Making bar chart for DataFrame all_areas.Area_Name.Wilshire
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Wilshire.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Wilshire.png'
 Making bar chart for DataFrame all_areas.Area_Name.Rampart
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Rampart.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Rampart.png'
 Making bar chart for DataFrame all_areas.Area_Name.Olympic
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Olympic.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Olympic.png'
 Making bar chart for DataFrame all_areas.Area_Name.West_Valley
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.West_Valley.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.West_Valley.png'
 Making bar chart for DataFrame all_areas.Area_Name.Van_Nuys
-Saved Bar Graph PNG 'actual/all_areas.Area_Name.Van_Nuys.png'
+Saved Bar Graph PNG './actual/all_areas.Area_Name.Van_Nuys.png'
 > 
 > #
 > #  To see accident count by Area Name, we need to get rid of the unnecessary data
@@ -127,4 +127,4 @@ Dropped ['Victim Sex', 'Cross Street', 'Date', 'Weekday', 'Hour'] from DataFrame
 > 
 > all_areas.bar X|Area Name:N|Area Name, Y|count()|Number of Accidents
 Making bar chart for DataFrame all_areas
-Saved Bar Graph PNG 'actual/all_areas.png'
+Saved Bar Graph PNG './actual/all_areas.png'
