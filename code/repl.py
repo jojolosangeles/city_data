@@ -3,7 +3,7 @@ import fileinput
 from PIL import Image
 from csvfiles.DataFrameFileNames import DataFrameFileNames
 from command import Command, Key, UnknownCommand
-from commands.data_frame import XrowCommand, LoadCommand, SaveCommand, FilterCommand 
+from commands.data_frame import XrowCommand, LoadCommand, UnionCommand, SaveCommand, FilterCommand 
 from commands.data_frame import CreateColumnCommand, ShowColumnsCommand, DropColumnsCommand
 from commands.data_frame import ShowImageCommand, AnalyzeDF
 from commands.chart import BarGraphCommand, HeatMapCommand, StackedLineCommand, GraphCommand
@@ -16,6 +16,7 @@ class CommandLineParser:
             # otherwise, the wrong command is identified
             Command("DF.COL1.COL2 => COMMAND", Command.CAPTURED_BY_REGEX),
             Command("DF.COL.COMMAND PARAMS", Command.CAPTURED_BY_REGEX),
+            Command("DF = DF1.COL1.VAL1 \+ DF2.COL2.VAL2", Command.UNION),
             Command("DF = FILE", Command.LOAD),
             Command("DF.COL <= CODE", Command.CREATE_COLUMN),
             Command("DF.COMMAND PARAMS", Command.CAPTURED_BY_REGEX),
@@ -87,6 +88,7 @@ class CommandExecutor:
         self.commands = {
             # DataFrame commands
             Command.LOAD: LoadCommand(),
+            Command.UNION: UnionCommand(),
             Command.ANALYZE: AnalyzeDF(),
             Command.SAVE: SaveCommand(),
             Command.CREATE_COLUMN: CreateColumnCommand(),

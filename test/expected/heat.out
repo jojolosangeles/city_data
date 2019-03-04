@@ -1,9 +1,9 @@
 Test: scripts/heat.txt
 > Northeast = expected/all_areas.Area_Name.Northeast.csv
-Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame Northeast
+Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame 'Northeast'
 > Northeast.Hour.Weekday => heatmap
 HeatMapCommand(Northeast) Hour, Weekday
-Saved PNG heatmap: actual/Northeast.Hour.Weekday.heatmap.png
+Saved PNG heatmap: ./actual/Northeast.Hour.Weekday.heatmap.png
 > Northeast.Hour.Victim Sex => heatmap
 HeatMapCommand(Northeast) Hour, Victim Sex
-Saved PNG heatmap: actual/Northeast.Hour.Victim_Sex.heatmap.png
+Saved PNG heatmap: ./actual/Northeast.Hour.Victim_Sex.heatmap.png

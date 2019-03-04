@@ -1,1 +1,1 @@
-py.test -s -k test_constructor
+py.test -s -k test_Command_1
