@@ -1,0 +1,3 @@
+set -x
+python ../code/main.py scripts/load_data_1.txt > actual/load_data_1.out
+diff expected/load_data_1.out actual/load_data_1.out

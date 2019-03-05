@@ -1,0 +1,3 @@
+set -x
+python ../code/main.py scripts/line3.txt > actual/line3.out
+diff expected/line3.out actual/line3.out

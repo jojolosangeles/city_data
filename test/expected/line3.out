@@ -1,0 +1,13 @@
+Test: scripts/line3.txt
+> all_areas = expected/all_areas.csv
+Loaded expected/all_areas.csv into DataFrame 'all_areas', 453817 rows
+> all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Date, Weekday, Hour
+Dropped ['Unnamed: 0', 'Date Occurred', 'Time Occurred', 'Date', 'Weekday', 'Hour'] from DataFrame 'all_areas'
+> all_areas.drop Victim Age, Victim Descent, Address, Cross Street
+Dropped ['Victim Age', 'Victim Descent', 'Address', 'Cross Street'] from DataFrame 'all_areas'
+> all_areas.columns
+['Area Name' 'Victim Sex' 'Year']
+> all_areas.xrow Year=2019
+451531 rows remaining
+> all_areas.Year.Area Name => stacked
+Saved PNG stacked lines: ./actual/all_areas.Year.Area_Name.stacked_line.png

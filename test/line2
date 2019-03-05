@@ -1,0 +1,4 @@
+set -x
+python ../code/main.py scripts/line2.txt > actual/line2.out
+diff expected/line2.out actual/line2.out
+diff -b expected/all_areas.Year.Victim_Sex.stacked_line.png actual

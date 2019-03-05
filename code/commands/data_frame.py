@@ -8,8 +8,9 @@ from commands.altair_types import AltairTypes
 
 class LoadCommand:
     def execute(self, commandData, context):
-        context.df_put(commandData[Key.DATA_FRAME_NAME], pd.read_csv(commandData[Key.FILE_NAME]))
-        print("Loaded {fileName} into DataFrame '{dataFrameName}'".format(fileName=commandData[Key.FILE_NAME], dataFrameName=commandData[Key.DATA_FRAME_NAME]))
+        dataFrame = pd.read_csv(commandData[Key.FILE_NAME])
+        context.df_put(commandData[Key.DATA_FRAME_NAME], dataFrame)
+        print("Loaded {fileName} into DataFrame '{dataFrameName}', {numberRows} rows".format(fileName=commandData[Key.FILE_NAME], dataFrameName=commandData[Key.DATA_FRAME_NAME],numberRows=len(dataFrame)))
 
 class UnionCommand:
     def execute(self, commandData, context):
@@ -17,8 +18,9 @@ class UnionCommand:
         df1 = df1[df1[commandData[Key.COLUMN_1]] == commandData[Key.VALUE_1]]
         df2 = context.df_get(commandData[Key.DATA_FRAME_2])
         df2 = df2[df2[commandData[Key.COLUMN_2]] == commandData[Key.VALUE_2]]
-        context.df_put(commandData[Key.DATA_FRAME_NAME], pd.concat([df1, df2]).drop_duplicates())
-        print("Created new DataFrame '{dataFrameName}'".format(dataFrameName=commandData[Key.DATA_FRAME_NAME]))
+        dataFrame = pd.concat([df1, df2]).drop_duplicates()
+        context.df_put(commandData[Key.DATA_FRAME_NAME], dataFrame)
+        print("Created new DataFrame '{dataFrameName}, {numberRows} rows'".format(dataFrameName=commandData[Key.DATA_FRAME_NAME],numberRows=len(dataFrame)))
 
 class SaveCommand:
     def execute(self, commandData, context):
@@ -159,6 +161,6 @@ class XrowCommand:
         else:
             dataFrame = dataFrame[dataFrame[leq] != req]
         context.df_put(dataFrameName, dataFrame)
-        print("Now {numberRows} rows".format(numberRows=len(dataFrame)))
+        print("{numberRows} rows remaining".format(numberRows=len(dataFrame)))
 
 

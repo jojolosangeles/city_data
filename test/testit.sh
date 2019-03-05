@@ -20,10 +20,15 @@ fi
 if [ ! -f "actual/line.out" ]; then
   ./line
 fi
-# if [ ! -f "actual/load_data_1.out" ]; then
-#   python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out
-#   diff expected/load_data_1.out actual/load_data_1.out
-# fi
+if [ ! -f "actual/line2.out" ]; then
+  ./line2
+fi
+if [ ! -f "actual/line3.out" ]; then
+  ./line3
+fi
+if [ ! -f "actual/load_data_1.out" ]; then
+  ./load_data_1
+fi
 # if [ ! -f "actual/save_data_1.out" ]; then
 #   python ../pd.py scripts/save_data_1.txt > actual/save_data_1.out
 #   diff expected/save_data_1.out actual/save_data_1.out

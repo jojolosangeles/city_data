@@ -1,11 +1,11 @@
 Test: scripts/heat.txt
 > Northeast = expected/all_areas.Area_Name.Northeast.csv
-Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame 'Northeast'
+Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame 'Northeast', 20977 rows
 > Northeast.Hour.Weekday => heatmap
 HeatMap for dataFrame 'Northeast', x=Hour, y=Weekday
 Saved PNG heatmap: ./actual/Northeast.Hour.Weekday.heatmap.png
 > male_female_df = Northeast.Victim Sex.M + Northeast.Victim Sex.F
-Created new DataFrame 'male_female_df'
+Created new DataFrame 'male_female_df, 20580 rows'
 > male_female_df.Hour.Victim Sex => heatmap
 HeatMap for dataFrame 'male_female_df', x=Hour, y=Victim Sex
 Saved PNG heatmap: ./actual/male_female_df.Hour.Victim_Sex.heatmap.png
