@@ -2,8 +2,10 @@ Test: scripts/heat.txt
 > Northeast = expected/all_areas.Area_Name.Northeast.csv
 Loaded expected/all_areas.Area_Name.Northeast.csv into DataFrame 'Northeast'
 > Northeast.Hour.Weekday => heatmap
-HeatMapCommand(Northeast) Hour, Weekday
+HeatMap for dataFrame 'Northeast', x=Hour, y=Weekday
 Saved PNG heatmap: ./actual/Northeast.Hour.Weekday.heatmap.png
-> Northeast.Hour.Victim Sex => heatmap
-HeatMapCommand(Northeast) Hour, Victim Sex
-Saved PNG heatmap: ./actual/Northeast.Hour.Victim_Sex.heatmap.png
+> male_female_df = Northeast.Victim Sex.M + Northeast.Victim Sex.F
+Created new DataFrame 'male_female_df'
+> male_female_df.Hour.Victim Sex => heatmap
+HeatMap for dataFrame 'male_female_df', x=Hour, y=Victim Sex
+Saved PNG heatmap: ./actual/male_female_df.Hour.Victim_Sex.heatmap.png

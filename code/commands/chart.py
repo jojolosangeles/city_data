@@ -71,7 +71,7 @@ class HeatMapCommand:
         dataFrame = context.df_get(dataFrameName)
         # X|Year:O|Year Y|count()|Number+of+Accidents
 
-        print("HeatMapCommand({dataFrameName}) {xDimension}, {yDimension}"
+        print("HeatMap for dataFrame '{dataFrameName}', x={xDimension}, y={yDimension}"
             .format(dataFrameName=dataFrameName,xDimension=xDimension,yDimension=yDimension))
         df = dataFrame.groupby([xDimension,yDimension]).count()
         dff = df.reset_index(level=[xDimension,yDimension])

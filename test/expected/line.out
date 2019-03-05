@@ -1,0 +1,15 @@
+Test: scripts/line.txt
+> all_areas = expected/all_areas.csv
+Loaded expected/all_areas.csv into DataFrame 'all_areas'
+> all_areas.Age <= [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in all_areas['Victim Age']]
+> all_areas.drop Unnamed: 0, Date Occurred, Time Occurred, Area Name, Date, Weekday, Hour
+Dropped ['Unnamed: 0', 'Date Occurred', 'Time Occurred', 'Area Name', 'Date', 'Weekday', 'Hour'] from DataFrame 'all_areas'
+> all_areas.drop Victim Age, Victim Sex, Victim Descent, Address, Cross Street
+Dropped ['Victim Age', 'Victim Sex', 'Victim Descent', 'Address', 'Cross Street'] from DataFrame 'all_areas'
+> all_areas.columns
+['Year' 'Age']
+> all_areas.xrow Year=2019
+Now 451531 rows
+> all_areas.Year.Age => stacked
+Saved PNG stacked lines: ./actual/all_areas.Year.Age.stacked_line.png
+> 

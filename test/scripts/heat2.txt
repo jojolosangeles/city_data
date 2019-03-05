@@ -1,8 +1,8 @@
 all_areas = expected/all_areas.csv
-all_areas.Hour.Weekday.heat
-all_areas.Hour.Victim Sex.heat
+all_areas.Hour.Weekday => heatmap
+all_areas.Hour.Victim Sex => heatmap
 all_areas.Age <= [("<25" if (x < 25) else "<35" if (x < 35) else "<45" if (x < 45) else "<55" if (x < 55) else "<65" if (x < 65) else "<75" if (x < 75) else "Old") for x in all_areas['Victim Age']]
-all_areas.Age.Weekday.heat
+all_areas.Age.Weekday => heatmap
 Northeast = expected/all_areas.Area_Name.Northeast.csv
-Northeast.Hour.Weekday.heat
-Northeast.Hour.Victim Sex.heat
+Northeast.Hour.Weekday => heatmap
+Northeast.Hour.Victim Sex => heatmap

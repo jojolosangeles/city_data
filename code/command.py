@@ -29,7 +29,7 @@ class Key:
 
 class RegexGenerator:
     COLUMN_REGEX = r"([ \w]+)"
-    NAME_REGEX = r"(\w+)"
+    NAME_REGEX = r"([_\w]+)"
     ANY_TEXT_REGEX = r"([ -~]+)"
     FILE_NAME_REGEX = r"([\w\.\\/]+)"
     SPACE_REGEX = r"\s+"
@@ -40,12 +40,12 @@ class RegexGenerator:
         self.rmap = {}
         self.rmap[Key.SPACE] = self.SPACE_REGEX
         self.rmap[Key.DOT] = self.DOT_REGEX
-        self.rmap[Key.DATA_FRAME_NAME] = self.NAME_REGEX
         self.rmap[Key.DATA_FRAME_1] = self.NAME_REGEX
         self.rmap[Key.DATA_FRAME_2] = self.NAME_REGEX
-        self.rmap[Key.COLUMN_NAME] = self.COLUMN_REGEX
+        self.rmap[Key.DATA_FRAME_NAME] = self.NAME_REGEX
         self.rmap[Key.COLUMN_1] = self.COLUMN_REGEX
         self.rmap[Key.COLUMN_2] = self.COLUMN_REGEX
+        self.rmap[Key.COLUMN_NAME] = self.COLUMN_REGEX
         self.rmap[Key.VALUE_1] = self.NAME_REGEX
         self.rmap[Key.VALUE_2] = self.NAME_REGEX
         self.rmap[Key.COMMAND] = self.NAME_REGEX
@@ -58,32 +58,19 @@ class RegexGenerator:
             Key.VALUE_1, Key.VALUE_2,
             Key.COMMAND, Key.CODE, Key.PARAMETERS, Key.FILE_NAME
             ]
-    
-    def earliest_key(self, s, keyList):
-        earliest_offset = 999
-        earliest_key = Key.NO_KEY
-        for key in keyList:
-            offset = s.find(key)
-            if offset >= 0 and offset < earliest_offset:
-                earliest_offset = offset
-                earliest_key = key
-        if earliest_key != Key.NO_KEY:
-            keyList.remove(earliest_key)
-        return earliest_key
 
     def getRegex(self, s):
-        parameters = []
+        tokens = re.split('[^a-zA-Z0-9]', s)
         s = s.replace(Key.SPACE, self.rmap[Key.SPACE])
         s = s.replace(Key.DOT, self.rmap[Key.DOT])
-        keyList = self.key_most_specific_to_least.copy()
-        while True:
-            key = self.earliest_key(s, keyList)
-            if key == Key.NO_KEY:
-                break
-            else:
-                s = s.replace(key, self.rmap[key])
-                if len(key) > 1:
-                    parameters.append(key)
+        # replace most specific to least
+        for key in self.key_most_specific_to_least:
+            s = s.replace(key, self.rmap[key])
+        # parameters have to be in order they are in original pattern
+        parameters = []
+        for t in tokens:
+            if t in self.key_most_specific_to_least:
+                parameters.append(t)
         return s, parameters
 
 

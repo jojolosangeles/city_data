@@ -1,0 +1,3 @@
+set -x
+python ../code/main.py scripts/heat2.txt > actual/heat2.out
+diff expected/heat2.out actual/heat2.out

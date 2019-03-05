@@ -1,4 +1,4 @@
 Northeast = expected/all_areas.Area_Name.Northeast.csv
 Northeast.Hour.Weekday => heatmap
-male_female_df = Northeast.Victim_Sex.M + Northeast.Victim_Sex.F
-mail_female_df.Hour.Victim Sex => heatmap
+male_female_df = Northeast.Victim Sex.M + Northeast.Victim Sex.F
+male_female_df.Hour.Victim Sex => heatmap

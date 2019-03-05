@@ -12,8 +12,13 @@ if [ ! -f "actual/drop_columns.out" ]; then
   ./drop_columns
 fi
 if [ ! -f "actual/heat.out" ]; then
-  python ../code/main.py scripts/heat.txt > actual/heat.out
-  diff expected/heat.out actual/heat.out
+  ./heat
+fi
+if [ ! -f "actual/heat2.out" ]; then
+  ./heat2
+fi
+if [ ! -f "actual/line.out" ]; then
+  ./line
 fi
 # if [ ! -f "actual/load_data_1.out" ]; then
 #   python ../pd.py scripts/load_data_1.txt > actual/load_data_1.out

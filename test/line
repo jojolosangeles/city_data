@@ -1,0 +1,4 @@
+set -x
+python ../code/main.py scripts/line.txt > actual/line.out
+diff expected/line.out actual/line.out
+diff -b expected/all_areas.Year.Age.stacked_line.png actual

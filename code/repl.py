@@ -39,6 +39,11 @@ class Context:
         self.dataFrameFileNames = dataFrameFileNames
         self.altairTypes = AltairTypes()
 
+    def df_show(self):
+        print("These are dataFrames:")
+        for x in self.dataFrames:
+            print("  '" + x + "'")
+
     def df_get(self, dataFrameName):
         return self.dataFrames[dataFrameName]
 

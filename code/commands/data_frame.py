@@ -8,15 +8,11 @@ from commands.altair_types import AltairTypes
 
 class LoadCommand:
     def execute(self, commandData, context):
-        print("LoadCommand")
-        print(commandData)
         context.df_put(commandData[Key.DATA_FRAME_NAME], pd.read_csv(commandData[Key.FILE_NAME]))
         print("Loaded {fileName} into DataFrame '{dataFrameName}'".format(fileName=commandData[Key.FILE_NAME], dataFrameName=commandData[Key.DATA_FRAME_NAME]))
 
 class UnionCommand:
     def execute(self, commandData, context):
-        print("UnionCommand")
-        print(commandData)
         df1 = context.df_get(commandData[Key.DATA_FRAME_1])
         df1 = df1[df1[commandData[Key.COLUMN_1]] == commandData[Key.VALUE_1]]
         df2 = context.df_get(commandData[Key.DATA_FRAME_2])
